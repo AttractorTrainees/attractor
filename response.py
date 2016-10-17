@@ -1,3 +1,8 @@
+from datetime import datetime
+
+from attractor.settings import *
+
+
 class Response(object):
     def __init__(self, request, body=b''):
         self.version = request.get_version()
@@ -7,9 +12,21 @@ class Response(object):
         self.code = b''
         self.status = b''
         self.headers = {}
+        self.set_default_headers()
+
+    def set_default_headers(self):
+        self.headers.setdefault(b'Server', SERVER_NAME)
+        self.headers.setdefault(b'Date', datetime.now().ctime().encode())
+        self.headers.setdefault(b'Content-Length', str(len(self.body)).encode())
+
+    def set_code(self, code):
+        self.code = code
+
+    def set_status(self, status):
+        self.status = status
 
     def set_header(self, key, value):
-        self.headers['key'] = value
+        self.headers[key] = value
 
     def get_headers(self):
         return self.headers
