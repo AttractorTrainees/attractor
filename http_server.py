@@ -1,5 +1,5 @@
 import socket
-from parser import *
+from parse import *
 from request import Request
 from routing import Routing
 from routes import routes

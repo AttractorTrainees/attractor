@@ -71,11 +71,9 @@ body{
 
 .stream-items li a{
 	text-decoration: none;
-}
-
-.stream-items li a p{
 	color: 000;
 }
+
 
 .stream-items li a:hover p{
 	color: #555;
