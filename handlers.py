@@ -2,7 +2,7 @@ import os
 from settings import database
 from tempate_engine import render
 from response import Response
-from parser import *
+from parse import *
 
 from settings import TEMPLATES_DIR
 
