@@ -19,6 +19,9 @@ class Response(object):
         self.headers.setdefault(b'Date', datetime.now().ctime().encode())
         self.headers.setdefault(b'Content-Length', str(len(self.body)).encode())
 
+    def set_cookie(self, sessionid):
+        self.set_header(b'Set-cookie', b'SESSIONID=' + sessionid + b'; patch=/;')
+
     def set_code(self, code):
         self.code = code
 
