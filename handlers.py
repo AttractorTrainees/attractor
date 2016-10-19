@@ -1,6 +1,7 @@
 import os
 from tempate_engine import render
 from response import Response
+from parser import *
 
 from settings import TEMPLATES_DIR
 
@@ -28,3 +29,4 @@ def about(request):
 
 def contacts(request):
     pass
+
