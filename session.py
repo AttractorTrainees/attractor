@@ -1,15 +1,15 @@
 import hashlib
 import random
 
-class Users:
 
+class Users:
     def __init__(self, user):
         self.userid = None
         self.username = None
         self.sessionid = None
 
     def user_auth(self, login, password):
-        if finduser = .get_user(login):
+        if finduser =.get_user(login):
             self.password_verify(password, finduser[2])
             self.username = finduser[1]
             self.userid = finduser[0]
@@ -40,4 +40,3 @@ class Users:
         if password == passwordfromdb:
             return True
         return False
-

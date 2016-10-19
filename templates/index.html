@@ -1,15 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet">
+    <title>Main page</title>
 </head>
 <body>
-{%for item in itemlist%}
-<h>{{item}}</h>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga incidunt iste optio perspiciatis? Ad, alias vitae.
-    Autem cum eligendi modi quis soluta. Autem consequatur, cum delectus dolor itaque ullam voluptates!</p>
-</body>
-{%end%}
+<div class="header-wrapper">
+    <div class="header">
+        <h2>Attractor Blog</h2>
+    </div>
+    <div class="button">
+        <a href="#">Войти</a>
+    </div>
+    <div class="button">
+        <a href="#">Выйти</a>
+    </div>
+    <div class="button">
+        <a href="#">Добавить запись</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="page-wrapper">
+    <div class="stream">
+        <ul class="stream-items">
+            {%for article in articles%}
 
+
+                {%for item in article%}
+                <h1>{{item}}</h1>
+                {%end%}
+            {%end%}
+        </ul>
+    </div>
+</div>
+<div class="footer">
+    <center>© IT Atrractor Blog</center>
+</div>
+</body>
 </html>
