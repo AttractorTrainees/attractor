@@ -1,4 +1,5 @@
 import os
+from settings import database
 from tempate_engine import render
 from response import Response
 from parser import *
@@ -11,9 +12,15 @@ def open_html(template):
     html = file.readlines()
     return ''.join(html)
 
+class Article():
+    def __init__(self,author,content,date):
+        self.author=author
+        self.content=content
+        self.date=date
 
 def index(request):
-
+    articles=database.get_articles()
+    context = {'articles': articles}
     rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context).encode()
     response = Response(request, body=rendered_body)
 

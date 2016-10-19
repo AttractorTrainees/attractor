@@ -25,6 +25,7 @@ class HTTPServer:
 
         print("Server succesfully acquired the socket with port:", self.port)
         print("Waiting for connection\n")
+
         routing = Routing(routes)
         while True:
             self.socket.listen(1)
