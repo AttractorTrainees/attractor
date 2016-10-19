@@ -5,11 +5,8 @@
     <title>Index</title>
 </head>
 <body>
-{%for item in itemlist%}
-<h>{{item}}</h>
 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga incidunt iste optio perspiciatis? Ad, alias vitae.
     Autem cum eligendi modi quis soluta. Autem consequatur, cum delectus dolor itaque ullam voluptates!</p>
+{{content}}
 </body>
-{%end%}
-
 </html>

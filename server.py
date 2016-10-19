@@ -1,4 +1,4 @@
-from http_server import *
+from http_server import HTTPServer
 
 if __name__ == "__main__":
     server = HTTPServer()

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from attractor.settings import *
+from settings import *
 
 
 class Response(object):
@@ -26,6 +26,10 @@ class Response(object):
         self.status = status
 
     def set_header(self, key, value):
+        if type(key) != bytes:
+            key = key.encode()
+        if type(value) != bytes:
+            value = value.encode()
         self.headers[key] = value
 
     def get_headers(self):
