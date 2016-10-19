@@ -5,6 +5,7 @@ BLOCK_START = "BLOCK_START"
 BLOCK_END = "BLOCK_END"
 BLOCK_ELSE = "BLOCK_ELSE"
 VARIABLE = "VARIABLE"
+LIST_ITEM = "LIST_ITEM"
 TEXT = "TEXT"
 
 
@@ -46,8 +47,9 @@ class Scope(object):
 def determine_type(token):
     """Determines Type of Node.  Can be either TEXT, VARIABLE,
     BLOCK_START, BLOCK_END or BLOCK ELSE """
-
-    if re.match("{{.*?}}", token):
+    if re.match("{{(\w+)\[(\w+)\]}}", token):
+        return LIST_ITEM
+    elif re.match("{{.*?}}", token):
         return VARIABLE
     elif re.match("{%.*?%}", token):
         if re.match("{%\s*?end\s*%}", token):
@@ -149,7 +151,14 @@ def evaluate_node(node, context, my_HTML):
         var_value = context.fetch(node[1])
         my_HTML.update_output(var_value)
         return None
-
+    if node[0] == LIST_ITEM:
+        open_bracket_index = node[1].index("[")
+        close_bracket_index = node[1].index("]")
+        element_index = int(node[1][open_bracket_index+1:close_bracket_index])
+        var_list = context.fetch(node[1][2:open_bracket_index])
+        list_var_value = var_list[element_index]
+        my_HTML.update_output(list_var_value)
+        return None
 
 def evaluate_logic(list_input, context, my_HTML):
     if bool((re.search("for\s.*?\sin", list_input[0][1]))):

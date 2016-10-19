@@ -13,7 +13,7 @@ def open_html(template):
 
 
 def index(request):
-    context = {'itemlist': [1, 2, 3]}
+
     rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context).encode()
     response = Response(request, body=rendered_body)
 
