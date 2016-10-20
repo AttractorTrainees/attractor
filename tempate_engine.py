@@ -7,6 +7,7 @@ BLOCK_ELSE = "BLOCK_ELSE"
 VARIABLE = "VARIABLE"
 LIST_ITEM = "LIST_ITEM"
 DICT_ITEM = 'DICT_ITEM'
+OBJ_ITEM = 'OBJ_ITEM'
 TEXT = "TEXT"
 
 
@@ -52,6 +53,8 @@ def determine_type(token):
         return LIST_ITEM
     elif re.match("{{(\w+)\[(\w+)\]}}", token):
         return DICT_ITEM
+    elif re.match('{{(\w+)\.(\w+)}}', token):
+        return OBJ_ITEM
     elif re.match("{{.*?}}", token):
         return VARIABLE
     elif re.match("{%.*?%}", token):
@@ -157,7 +160,7 @@ def evaluate_node(node, context, my_HTML):
     if node[0] == LIST_ITEM:
         open_bracket_index = node[1].index("[")
         close_bracket_index = node[1].index("]")
-        element_index = int(node[1][open_bracket_index+1:close_bracket_index])
+        element_index = int(node[1][open_bracket_index + 1:close_bracket_index])
         var_list = context.fetch(node[1][2:open_bracket_index])
         list_var_value = var_list[element_index]
         my_HTML.update_output(list_var_value)
@@ -166,11 +169,19 @@ def evaluate_node(node, context, my_HTML):
         item = node[1][2:-2]
         open_bracket_index = item.index("[")
         close_bracket_index = item.index("]")
-        key = item[open_bracket_index+1:close_bracket_index]
+        key = item[open_bracket_index + 1:close_bracket_index]
         var_dict = context.fetch(item[:open_bracket_index])
         value = var_dict[key]
         my_HTML.update_output(value)
         return None
+    if node[0] == OBJ_ITEM:
+        item = node[1][2:-2]
+        obj_name, attr = item.split('.', 1)
+        obj = context.fetch(obj_name)
+        value = getattr(obj, attr, '')
+        my_HTML.update_output(value)
+        return None
+
 
 def evaluate_logic(list_input, context, my_HTML):
     if bool((re.search("for\s.*?\sin", list_input[0][1]))):
@@ -217,4 +228,4 @@ def render(file, dictionary):
         template = f.read()
     return process_template(get_ast(tokenize(template)), outter_context)
 
-#print(determine_type('{{item["id"]}}'))
+# print(determine_type('{{item["id"]}}'))

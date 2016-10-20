@@ -22,11 +22,11 @@ class Article(object):
     def get_article_dict(self):
         return {
             'id': self.id,
-            'author': self.author,
+            'author': self.author.official_name,
             'title': self.title,
             'text': self.text,
-            'created_datetime': self.created_datetime,
-            'updated_datetime': self.updated_datetime
+            'created_datetime': str(self.created_datetime),
+            'updated_datetime': str(self.updated_datetime)
         }
 
     def __str__(self):

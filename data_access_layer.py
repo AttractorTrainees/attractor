@@ -66,7 +66,7 @@ class MemoryDataAccessLayer(object):
                 print('Поле %s модели Article не найдено' % attr)
                 return None
 
-    def get_all_acticles(self):
+    def get_all_articles(self):
         return self.articles
 
     def delete_article(self, article):
