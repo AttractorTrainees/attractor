@@ -1,10 +1,9 @@
 class Request(object):
-
-    def __init__(self, query, header, body):
+    def __init__(self, query, headers, body):
         self._method = query[0]
         self._path = query[1]
         self._version = query[2]
-        self._header = header
+        self._headers = headers
         self._body = body
 
     def get_method(self):
@@ -25,15 +24,14 @@ class Request(object):
     def set_version(self, version):
         self._version = version
 
-    def get_header(self):
-        return self.get_header()
+    def get_headers(self):
+        return self._headers
 
-    def set_header(self,header):
-        self._header = header
+    def get_header(self, name):
+        return self._headers.get(name)
 
     def get_body(self):
         return self._body
 
     def set_body(self, body):
         self._body = body
-        
