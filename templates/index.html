@@ -130,18 +130,18 @@
 			<ul class="stream-items">
 				<li>
                     {% for article in articles %}
-					<a href="{{article[0]}}">
+					<a href="{{article['id']}}">
 						<div class="item-header">
 							<div class="item-author">
-							<p>Автор: {{article[2]}}</p>
+							<p>Автор: {{article['author']}}</p>
 							</div>
 							<div class="item-time">
-							<p>Опубликованно: {{article[3]}}</p>
+							<p>Опубликованно: {{article['created_date']}}</p>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 						<div class="item-body">
-                            <p>{{article[1]}}</p>
+                            <p>{{article['text']}}</p>
 							</div>
 					</a>
                     {% end %}
