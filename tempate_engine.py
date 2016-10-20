@@ -224,7 +224,7 @@ def render(file, dictionary):
     """The black box function that a another programer could use.
     Takes in file name and dictionary"""
     outter_context = Scope(None, dictionary)
-    with open(file, "r") as f:
+    with open(file, "r", encoding="utf-8") as f:
         template = f.read()
     return process_template(get_ast(tokenize(template)), outter_context)
 
