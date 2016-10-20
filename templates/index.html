@@ -110,18 +110,15 @@
 		<div class="header">
 			<h2>Attractor Blog</h2>
 		</div>
-        {% if user %}
         <div class="button">
 			<a href="#">Выйти</a>
 		</div>
 		<div class="button">
 			<a href="#">Добавить запись</a>
 		</div>
-        {% else %}
         <div class="button">
 			<a href="#">Войти</a>
 		</div>
-        {%end%}
 
 		<div class="clearfix"></div>
 	</div>
@@ -130,18 +127,18 @@
 			<ul class="stream-items">
 				<li>
                     {% for article in articles %}
-					<a href="{{article['id']}}">
+					<a href="{{article.id}}">
 						<div class="item-header">
 							<div class="item-author">
-							<p>Автор: {{article['author']}}</p>
+							<p>Автор: {{article.author}}</p>
 							</div>
 							<div class="item-time">
-							<p>Опубликованно: {{article['created_date']}}</p>
+							<p>Опубликованно: {{article.created_datetime}}</p>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 						<div class="item-body">
-                            <p>{{article['text']}}</p>
+                            <p>{{article.text}}</p>
 							</div>
 					</a>
                     {% end %}

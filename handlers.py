@@ -19,7 +19,7 @@ class Article():
         self.date=date
 
 def index(request):
-    articles=database.get_all_articles_dict()
+    articles=database.get_all_articles()
     context = {'articles': articles}
     rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context).encode()
     response = Response(request, body=rendered_body)
