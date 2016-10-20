@@ -1,25 +1,18 @@
 import hashlib
 import random
+from settings import database
 
 
-class Users:
-    def __init__(self, user):
-        self.user_id = None
-        self.user_name = None
-        self.session_id = None
+def is_login(request):
+    for user in database:
+        try:
+            if user.find_field_value('sessionid',request.get_cookie()):
+                return user
+        except AttributeError:
+            return None
+    return None
 
-    def user_auth(self, login, password):
-        if user == get_user(login):
-            self.password_verify(password, user[2])
-            self.user_name = user[1]
-            self.user_id = user[0]
-            return True
-        return False
 
-    def check_sessionid(self, session_id):
-        if session_id == self.session_id:
-            return True
-        return False
 
     def set_session_id(self):
         salt = generate_salt
