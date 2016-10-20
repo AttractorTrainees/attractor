@@ -4,28 +4,28 @@ import random
 
 class Users:
     def __init__(self, user):
-        self.userid = None
-        self.username = None
-        self.sessionid = None
+        self.user_id = None
+        self.user_name = None
+        self.session_id = None
 
     def user_auth(self, login, password):
-        if finduser =.get_user(login):
-            self.password_verify(password, finduser[2])
-            self.username = finduser[1]
-            self.userid = finduser[0]
+        if user == get_user(login):
+            self.password_verify(password, user[2])
+            self.user_name = user[1]
+            self.user_id = user[0]
             return True
         return False
 
-    def check_sessionid(self, sessionid):
-        if sessionid == self.sessionid:
+    def check_sessionid(self, session_id):
+        if session_id == self.session_id:
             return True
         return False
 
-    def set_sessionid(self):
+    def set_session_id(self):
         salt = generate_salt
-        password =
-        sessionid = hashlib.sha1((salt + password).encode('utf-8')).hexdigest()
-        return sessionid
+        password = ''
+        session_id = hashlib.sha1((salt + password).encode('utf-8')).hexdigest()
+        return session_id
 
     def generate_salt(self):
         salt = ''
