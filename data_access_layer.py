@@ -31,8 +31,8 @@ class MemoryDataAccessLayer(object):
         user = self.get_user('id', id)
         if user:
             user.set_attribute('firstname', firstname)
-            user.set_attribute('lastname', firstname)
-            user.set_attribute('login', firstname)
+            user.set_attribute('lastname', lastname)
+            user.set_attribute('login', login)
             return user
         return None
 
