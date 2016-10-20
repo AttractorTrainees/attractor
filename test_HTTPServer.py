@@ -58,11 +58,19 @@ class TestRoutes(TestCase):
         handler = index
         version = request.get_version()
         body = request.set_body(None)
-        header = request.set_header(None)
 
         self.assertEqual((method, path, handler), (b'GET', b'/about', index))
         self.assertEqual(version, b'HTTP/1.1')
         self.assertEqual(body, None)
         self.assertEqual(header, None)
 
+    def test_set_code_response(self):
+        pass
+
+    def test_data_bufersize(self):
+        server = HTTPServer()
+        buffer_size = 4096
+        data = 200
+
+        self.assertGreater(buffer_size, data)
 

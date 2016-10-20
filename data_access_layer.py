@@ -69,7 +69,7 @@ class MemoryDataAccessLayer(object):
                 return None
 
 
-    def get_all_acticles(self):
+    def get_all_articles(self):
         return self.articles
 
     def delete_article(self, article):
