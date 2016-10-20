@@ -6,6 +6,7 @@ BLOCK_END = "BLOCK_END"
 BLOCK_ELSE = "BLOCK_ELSE"
 VARIABLE = "VARIABLE"
 LIST_ITEM = "LIST_ITEM"
+DICT_ITEM = 'DICT_ITEM'
 TEXT = "TEXT"
 
 
@@ -47,8 +48,10 @@ class Scope(object):
 def determine_type(token):
     """Determines Type of Node.  Can be either TEXT, VARIABLE,
     BLOCK_START, BLOCK_END or BLOCK ELSE """
-    if re.match("{{(\w+)\[(\w+)\]}}", token):
+    if re.match("{{(\w+)\[(\d+)\]}}", token):
         return LIST_ITEM
+    elif re.match("{{(\w+)\[(\w+)\]}}", token):
+        return DICT_ITEM
     elif re.match("{{.*?}}", token):
         return VARIABLE
     elif re.match("{%.*?%}", token):
@@ -159,6 +162,15 @@ def evaluate_node(node, context, my_HTML):
         list_var_value = var_list[element_index]
         my_HTML.update_output(list_var_value)
         return None
+    if node[0] == DICT_ITEM:
+        item = node[1][2:-2]
+        open_bracket_index = item.index("[")
+        close_bracket_index = item.index("]")
+        key = item[open_bracket_index+1:close_bracket_index]
+        var_dict = context.fetch(item[:open_bracket_index])
+        value = var_dict[key]
+        my_HTML.update_output(value)
+        return None
 
 def evaluate_logic(list_input, context, my_HTML):
     if bool((re.search("for\s.*?\sin", list_input[0][1]))):
@@ -204,3 +216,5 @@ def render(file, dictionary):
     with open(file, "r") as f:
         template = f.read()
     return process_template(get_ast(tokenize(template)), outter_context)
+
+#print(determine_type('{{item["id"]}}'))
