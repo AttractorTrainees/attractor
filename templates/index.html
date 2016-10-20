@@ -3,152 +3,57 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="style.css" rel="stylesheet">
 	<title>Main page</title>
-    <style>body{
-	margin: 0;
-	padding: 0;
-	padding-top: 90px;
-	background-color: #f4f4f4;
-}
-
-.clearfix{
-	clear: both;
-}
-
-.header-wrapper{
-	position: fixed;
-	top:0;
-	width: 100%;
-	height: 70px;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
-	background-color: #fff;
-
-}
-
-.header{
-	padding: 0 25px;
-	float:left;
-
-}
-
-.button{
-	padding: 15px 15px;
-    text-align: center;
-	float:right;
-}
-
-.button a{
-	background: #63b8ee none repeat scroll 0 0;
-	color: #fff;
-	padding: 10px 20px;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	transition: all 0.2s ease 0s;
-	border-radius: 4px;
-}
-
-.button a:hover{
-	background: #bddbfa;
-}
-
-.page-wrapper{
-	background-color: #fff;
-	width: 768px;
-	height: 100%;
-	margin: 0 auto;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
-	border-radius: 6px;
-}
-
-.footer{
-	padding: 10px 0;
-}
-
-.stream-items{
-	padding: 0;
-	list-style-type: none;
-}
-
-.stream-items li{
-	padding: 25px 50px;
-	border-bottom: 1px solid #ededed;
-}
-
-.stream-items li a{
-	text-decoration: none;
-}
-
-.stream-items li a p{
-	color: 000;
-}
-
-.stream-items li a:hover p{
-	color: #555;
-}
-
-.stream-items li:last-child{
-	border-bottom: none;
-}
-
-.item-time{
-	float:right;
-}
-
-.item-time p{
-	text-align:right;
-}
-
-.item-author{
-	float:left;
-}
-</style>
+    <style>
+		body{margin:0;padding:0;padding-top:90px;background-color:#f4f4f4}.clearfix{clear:both}.header-wrapper{position:fixed;top:0;width:100%;height:70px;box-shadow:0 1px 3px 0 rgba(0,0,0,0.15);background-color:#fff}.header{padding:0 25px;float:left}.button{padding:15px;text-align:center;float:right}.button a{background:#63b8ee none repeat scroll 0 0;color:#fff;padding:10px 20px;text-decoration:none;display:inline-block;font-size:16px;transition:all .2s ease 0;border-radius:4px}.button a:hover{background:#bddbfa}.page-wrapper{background-color:#fff;width:768px;height:100%;margin:0 auto;box-shadow:0 1px 1px 0 rgba(0,0,0,0.1);border-radius:6px}.footer{padding:10px 0}.stream-items{padding:0;list-style-type:none}.stream-items li{padding:25px 50px;border-bottom:1px solid #ededed}.stream-items li a{text-decoration:none}.stream-items li a p{color:#000}.stream-items li a:hover p{color:#555}.stream-items li:last-child{border-bottom:none}.item-time{float:right}.item-time p{text-align:right}.item-author{float:left}
+	</style>
 </head>
 <body>
-	<div class="header-wrapper">
-		<div class="header">
-			<h2>Attractor Blog</h2>
-		</div>
-        <div class="button">
-			<a href="#">Выйти</a>
-		</div>
-		<div class="button">
-			<a href="#">Добавить запись</a>
-		</div>
-        <div class="button">
-			<a href="#">Войти</a>
-		</div>
-
-		<div class="clearfix"></div>
+<div class="header-wrapper">
+	<div class="header">
+		<h2>Attractor Blog</h2>
 	</div>
-	<div class="page-wrapper">
-		<div class="stream">
-			<ul class="stream-items">
-				<li>
-                    {% for article in articles %}
-					<a href="{{article.id}}">
-						<div class="item-header">
-							<div class="item-author">
-							<p>Автор: {{article.author}}</p>
-							</div>
-							<div class="item-time">
-							<p>Опубликованно: {{article.created_datetime}}</p>
-							</div>
+	{%if user%}
+	<div class="button">
+		<a href="#">Добавить запись</a>
+	</div>
+	<div class="button">
+		<a href="#">Выйти</a>
+	</div>
+	{%else%}
+	<div class="button">
+		<a href="#">Войти</a>
+	</div>
+	{%end%}
+	<div class="clearfix"></div>
+</div>
+<div class="page-wrapper">
+	<div class="stream">
+		<ul class="stream-items">
+			<li>
+				{% for article in articles %}
+				<a href="{{article.id}}">
+					<div class="item-header">
+						<div class="item-author">
+						<p>Автор: {{article.author}}</p>
 						</div>
-						<div class="clearfix"></div>
-						<div class="item-body">
-                            <p>{{article.text}}</p>
-							</div>
-					</a>
-                    {% end %}
-				</li>
+						<div class="item-time">
+						<p>Опубликованно: {{article.created_datetime}}</p>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="item-body">
+						<p>{{article.text}}</p>
+						</div>
+				</a>
+				{% end %}
+			</li>
 
-			</ul>
-		</div>
+		</ul>
 	</div>
-	<div class="footer">
-		<center>© IT Atrractor Blog</center>
-	</div>
+</div>
+<div class="footer">
+	<center>© IT Atrractor Blog</center>
+</div>
 </body>
 </html>

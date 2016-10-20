@@ -5,8 +5,16 @@ body{
 	background-color: #f4f4f4;
 }
 
+.text-center{
+	text-align:center;
+}
+
 .clearfix{
 	clear: both;
+}
+
+.hidden{
+	visibility: hidden;
 }
 
 .header-wrapper{
@@ -93,4 +101,21 @@ body{
 
 .item-author{
 	float:left;
+}
+
+.item-time p{
+	text-align:right;
+}
+
+.item-author{
+	float:left;
+}
+
+.item-footer{
+	
+}
+
+.item-edit a, .item-delete a{
+	color: #fff !important;
+	padding: 10px 15px;
 }
