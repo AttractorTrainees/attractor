@@ -39,12 +39,13 @@ class Article(object):
 
 
 class User(object):
-    def __init__(self, id=0, firstname='', lastname='', login='', password=''):
+    def __init__(self, id=0, firstname='', lastname='', login='', password='', sessionid=''):
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
         self.login = login
         self.password = password
+        self.sessionid = sessionid
 
     def find_field_value(self, attr, value):
         if getattr(self, attr) == value:
