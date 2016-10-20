@@ -37,5 +37,7 @@ class Request(object):
         self._body = body
 
     def get_cookie(self):
-        sessionid = self.get_header(b'Cookie')
-        return sessionid
+        value = self.get_header(b'COOKIE')
+        sessionid = value.split(b'=', 1)[1]
+
+        return sessionid.decode()
