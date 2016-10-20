@@ -36,12 +36,12 @@ class HTTPServer:
     def getting_data(self, connection, routing):
         buffer_size = 4096
         data = self.recv_all_data(connection, buffer_size)
-        query, header, body = parse_http(data)
-        request = Request(query, header, body)
-
-        handler = routing.handle_request(request)
-        response = handler(request)
-        connection.send(response.encode_http())
+        if data:
+            query, header, body = parse_http(data)
+            request = Request(query, header, body)
+            handler = routing.handle_request(request)
+            response = handler(request)
+            connection.send(response.encode_http())
         connection.close()
 
     def recv_all_data(self, connection, buffer_size):
