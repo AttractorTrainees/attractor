@@ -35,3 +35,7 @@ class Request(object):
 
     def set_body(self, body):
         self._body = body
+
+    def get_cookie(self):
+        sessionid = self.get_header(b'Cookie')
+        return sessionid
