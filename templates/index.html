@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="http://127.0.0.1:8000/static/css/style.css">
 </head>
 <body>
 <div class="header-wrapper">
@@ -12,16 +12,18 @@
         <h2>Attractor Blog</h2>
 
     </div>
+    {% if user %}
     <div class="button">
         <a href="#">Выйти</a>
     </div>
+    {% else %}
     <div class="button">
         <a href="#">Добавить запись</a>
     </div>
     <div class="button">
-        <a href="#">Войти</a>
+        <a href="/login/">Войти</a>
     </div>
-
+    {% end %}
     <div class="clearfix"></div>
 </div>
 <div class="page-wrapper">

@@ -13,6 +13,7 @@ def parse_http(string):
 
 
 def query_parser(query):
+    query = query.replace(b'\r\n', b'')
     query = query.split(b"&")
     my_dict = {}
     for i in query:

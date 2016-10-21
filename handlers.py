@@ -13,9 +13,13 @@ def open_html(template):
     html = file.readlines()
     return ''.join(html)
 
+
 def index(request):
+    session = Session(request)
+    user = session.find_session()
     articles = database.get_all_articles()
     context = {'articles': articles}
+    context['user'] = user
     rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context).encode()
     response = Response(body=rendered_body)
 
@@ -23,6 +27,7 @@ def index(request):
     response.set_code(b'200')
     response.set_status(b'OK')
     return response
+
 
 def article(request, id):
     id = int(id)
@@ -37,21 +42,32 @@ def article(request, id):
     response.set_status(b'OK')
     return response
 
+
 def login(request):
+    template_path = os.path.join(TEMPLATES_DIR, 'login.html')
+    rendered_body = render(template_path, {'title': 'Авторизация'}).encode()
+    response = Response(body=rendered_body)
+    response.set_header(b'Content-Type', b'text/html')
+    response.set_code(b'200')
+    response.set_status(b'OK')
+    return response
+
+
+def sign_in(request):
     session = Session(request)
     sessionid = session.auth()
-
-    response = Response(request, body=rendered_body)
+    # template_path = os.path.join(TEMPLATES_DIR, 'login.html')
+    body = b'<html><head><meta http-equiv="refresh" content="1;URL=/"/></head></html>'
+    response = Response(body=body)
     response.set_header(b'Content-Type', b'text/html')
     response.set_code(b'200')
     response.set_status(b'OK')
     if sessionid:
         response.set_cookie(sessionid)
-
     return response
 
-def logout(request):
 
+def logout(request):
     response = Response(request, body=rendered_body)
     response.set_header(b'Content-Type', b'text/html')
     response.set_code(b'200')
@@ -59,6 +75,7 @@ def logout(request):
     response.delete_cookie()
 
     return response
+
 
 def about(request):
     pass

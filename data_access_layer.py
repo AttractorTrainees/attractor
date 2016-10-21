@@ -10,6 +10,9 @@ class MemoryDataAccessLayer(object):
     def add_user(self, user):
         self.users.append(user)
 
+    def get_all_users(self):
+        return self.users
+
     def delete_user(self, user):
         try:
             self.users.remove(user)

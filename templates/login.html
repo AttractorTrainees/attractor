@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://127.0.0.1:8000/static/css/style.css">
+    <title>{{title}}</title>
+
+</head>
+<body>
+<div class="header-wrapper">
+    <div class="header">
+        <h2>Attractor Blog</h2>
+    </div>
+    <div class="button">
+        <a href="#">Войти</a>
+    </div>
+    <div class="button">
+        <a href="#">Выйти</a>
+    </div>
+    <div class="button">
+        <a href="#">Добавить запись</a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="page-wrapper">
+    <div class="stream">
+        <ul class="stream-items">
+            <li>
+                <div class="item-body">
+                    <p>
+                    <form class="form-horizontal" action="/login/" method="post">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
+                            <input name="username" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
+                            <input name="password" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="button">Войти</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="footer">
+    <center>© IT Atrractor Blog</center>
+</div>
+
+</body>
+</html>

@@ -3,6 +3,7 @@ import random
 from settings import database
 from parse import *
 
+
 class Session:
     def __init__(self, request):
         self.request = request
@@ -17,11 +18,11 @@ class Session:
         return post
 
     def login(self, post):
-        for user in database:
+        for user in database.get_all_users():
             try:
-                if user.find_field_value('login', post['username']):
-                    if user['password'] == post['password']:
-                        sessionid = self.generate_session(post['password'])
+                if user.find_field_value('login', post[b'username']):
+                    if user['password'] == post[b'password']:
+                        sessionid = self.generate_session(post[b'password'])
                         user.set_attribute('sessionid', sessionid)
                         return (sessionid)
                     return ("Ваши логин или пароль не соответствуют.")
@@ -33,7 +34,7 @@ class Session:
         pass
 
     def find_session(self):
-        for user in database:
+        for user in database.get_all_users():
             try:
                 if user.find_field_value('sessionid', self.request.get_cookie()):
                     return user
