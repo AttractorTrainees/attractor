@@ -38,7 +38,7 @@ def article(request, id):
     if not article:
         return handler_error_404(request)
     context = {'article': article}
-    template_path = os.path.join(TEMPLATES_DIR, 'article.html')
+    template_path = os.path.join(TEMPLATES_DIR, 'articles.html')
     rendered_body = render(template_path, context).encode()
     response = Response(request, body=rendered_body)
     response.set_header(b'Content-Type', b'text/html')

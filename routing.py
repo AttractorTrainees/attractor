@@ -1,5 +1,5 @@
 import re
-from errors import handler_error_404
+from errors import handler_error_404, text
 
 
 class Routing(object):

@@ -13,5 +13,9 @@ def handler_error_404(request, *args):
     return response
 
 
+def text(request, *args):
+    print('ошибка', args)
+
+
 class HTTPError(Exception):
     pass
