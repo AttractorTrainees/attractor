@@ -21,6 +21,10 @@ acticles = [
     Article(id=156, author=users[2], title='Article6', text='TextArticle6'),
 ]
 
+all_available_methods = [
+    'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'
+]
+
 for article in acticles:
     database.add_article(article)
 del acticles
