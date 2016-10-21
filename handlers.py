@@ -13,13 +13,6 @@ def open_html(template):
     return ''.join(html)
 
 
-class Article():
-    def __init__(self, author, content, date):
-        self.author = author
-        self.content = content
-        self.date = date
-
-
 def index(request):
     articles = database.get_all_articles()
     context = {'articles': articles}

@@ -18,7 +18,7 @@ class HTTPServer:
             print("Launching HTTP server...", self.host, ":", self.port)
             self.socket.bind((self.host, self.port))
         except Exception as e:
-            print("ERROR: Could not aquire port:", self.port, "\n")
+            print("ERROR: Could not acquire port:", self.port, "\n")
             self.shutdown()
             import sys
             sys.exit(1)
