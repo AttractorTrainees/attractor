@@ -20,7 +20,7 @@ class Article():
         self.date = date
 
 
-def index(body):
+def index(request):
     articles = database.get_all_articles()
     context = {'articles': articles}
     rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context).encode()
@@ -32,7 +32,7 @@ def index(body):
     return response
 
 
-def article(body, id):
+def article(request, id):
     id = int(id)
     article = database.get_article('id', id)
     if not article:
@@ -45,7 +45,7 @@ def article(body, id):
     response.set_status(b'OK')
     return response
 
-def login():
+def login(request):
     pass
 
 def about(request):

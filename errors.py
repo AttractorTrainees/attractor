@@ -84,7 +84,7 @@ _codes = {
 }
 
 
-def handler_error(body='', *args):
+def handler_error(request = None, *args):
     template = 'error.html'
 
     code = args[0]

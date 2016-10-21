@@ -50,7 +50,7 @@ class HTTPServer:
                 return
 
             handler, args = routing.handle_request(request)
-            response = handler(request.get_body(), *args)
+            response = handler(request, *args)
             connection.send(response.encode_http())
             connection.close()
             return
