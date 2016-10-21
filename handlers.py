@@ -5,20 +5,13 @@ from response import Response
 from parse import *
 from errors import handler_error
 from settings import TEMPLATES_DIR
+from session import Session
 
 
 def open_html(template):
     file = open(os.path.join(TEMPLATES_DIR, template))
     html = file.readlines()
     return ''.join(html)
-
-
-class Article():
-    def __init__(self, author, content, date):
-        self.author = author
-        self.content = content
-        self.date = date
-
 
 def index(request):
     articles = database.get_all_articles()
@@ -30,7 +23,6 @@ def index(request):
     response.set_code(b'200')
     response.set_status(b'OK')
     return response
-
 
 def article(request, id):
     id = int(id)
@@ -46,7 +38,27 @@ def article(request, id):
     return response
 
 def login(request):
-    pass
+    session = Session(request)
+    sessionid = session.auth()
+
+    response = Response(request, body=rendered_body)
+    response.set_header(b'Content-Type', b'text/html')
+    response.set_code(b'200')
+    response.set_status(b'OK')
+    if sessionid:
+        response.set_cookie(sessionid)
+
+    return response
+
+def logout(request):
+
+    response = Response(request, body=rendered_body)
+    response.set_header(b'Content-Type', b'text/html')
+    response.set_code(b'200')
+    response.set_status(b'OK')
+    response.delete_cookie()
+
+    return response
 
 def about(request):
     pass

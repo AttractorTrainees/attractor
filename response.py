@@ -23,6 +23,9 @@ class Response(object):
     def set_cookie(self, sessionid):
         self.set_header(b'Set-cookie', b'SESSIONID=' + sessionid + b'; patch=/;')
 
+    def delete_cookie(self):
+        self.set_header(b'Set-cookie', b'SESSIONID=;patch=/;expires=0;')
+
     def set_code(self, code):
         self.code = code
 
