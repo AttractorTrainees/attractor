@@ -3,8 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="style.css" rel="stylesheet">
-	<title>Main page</title>
+	<title>Main</title>
     <style>body{
 	margin: 0;
 	padding: 0;
@@ -127,7 +126,7 @@
 			<ul class="stream-items">
 				<li>
                     {% for article in articles %}
-					<a href="{{article.id}}">
+					<a href="/articles/{{article.id}}/">
 						<div class="item-header">
 							<div class="item-author">
 							<p>Автор: {{article.author}}</p>

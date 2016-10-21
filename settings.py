@@ -18,7 +18,7 @@ acticles = [
     Article(id=3, author=users[1], title='Article3', text='TextArticle3'),
     Article(id=4, author=users[1], title='Article4', text='TextArticle4'),
     Article(id=5, author=users[2], title='Article5', text='TextArticle5'),
-    Article(id=6, author=users[2], title='Article6', text='TextArticle6'),
+    Article(id=156, author=users[2], title='Article6', text='TextArticle6'),
 ]
 
 for article in acticles:

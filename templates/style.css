@@ -96,3 +96,12 @@ body{
 .item-author{
 	float:left;
 }
+
+.item-footer{
+	
+}
+
+.item-edit a, .item-delete a{
+	color: #fff;
+	padding: 5px 10px;
+}

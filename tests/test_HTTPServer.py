@@ -6,6 +6,8 @@ from routes import Route
 from handlers import *
 from request import *
 
+
+
 routes = [Route(b'GET', b'/', index),
           Route(b'GET', b'/about', about),
           Route(b'GET', b'/contacts', contacts)]
