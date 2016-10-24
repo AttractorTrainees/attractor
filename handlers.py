@@ -65,7 +65,10 @@ def sign_in(request):
     response = Response()
     if sessionid:
         response.set_cookie(sessionid)
+    else:
+        return handler_error(request, 404)
     return response.redirect('/')
+
 
 
 def logout(request):
