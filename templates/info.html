@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="style.css" rel="stylesheet">
-    <title>Main page</title>
-    <style>
-
-    </style>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="http://127.0.0.1:8000/static/css/style.css">
 </head>
 <body>
 <div class="header-wrapper">
-    <div class="header">
-        <h2>Attractor Blog</h2>
+     <div class="header">
+        <h2><a href="/" style="text-decoration: none">Attractor Blog</a></h2>
+
+    </div>
+    {% if user %}
+    <div class="button">
+        <a href="/logout/">Выйти</a>
     </div>
     <div class="button">
-        <a href="#">Войти</a>
+        <a href="/send_article/">Добавить запись</a>
     </div>
+    {% else %}
     <div class="button">
-        <a href="#">Выйти</a>
+        <a href="/login/">Войти</a>
     </div>
-    <div class="button">
-        <a href="#">Добавить запись</a>
-    </div>
+    {% end %}
     <div class="clearfix"></div>
 </div>
 <div class="page-wrapper">

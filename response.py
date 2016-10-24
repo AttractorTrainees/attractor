@@ -21,10 +21,11 @@ class Response(object):
         self.headers.setdefault(b'Content-Length', str(len(self.body)).encode())
 
     def set_cookie(self, sessionid):
-        self.set_header(b'Set-cookie', b'SESSIONID=' + sessionid + b'; patch=/;')
+        self.set_header(b'Set-cookie',
+                        b'SESSIONID=%s;  path=/; expires=Thu, 01 Jan 2020 00:00:00 GMT;' % sessionid.encode())
 
     def delete_cookie(self):
-        self.set_header(b'Set-cookie', b'SESSIONID=;patch=/;expires=0;')
+        self.set_header(b'Set-cookie', b'SESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/;')
 
     def set_code(self, code):
         self.code = code
@@ -59,3 +60,11 @@ class Response(object):
         except Exception as ex:
             print(ex)
             raise
+
+    def redirect(self, location=''):
+        self.set_code(b'303')
+        self.set_status(b'See Other')
+        if type(location) != bytes:
+            location = location.encode()
+        self.set_header(b'Location', location)
+        return self

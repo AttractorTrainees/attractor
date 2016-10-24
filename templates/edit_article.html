@@ -26,32 +26,42 @@
     {% end %}
     <div class="clearfix"></div>
 </div>
+
+
+
+
+
 <div class="page-wrapper">
     <div class="stream">
         <ul class="stream-items">
             <li>
-                <div class="item-body">
-                    <p>
-                    <form class="form-horizontal" action="/login/" method="post">
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-2 control-label">Логин</label>
-                            <input name="username" value="peter_user" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword3" class="col-sm-2 control-label">Пароль</label>
-                            <input name="password" value="1234" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="button">Войти</button>
-                            <div class="clearfix"></div>
-                        </div>
-                    </form>
-                    </p>
-                </div>
+				<div class="item-body">
+					<p>
+						<form class="form-horizontal" action="/update_article/" method="post">
+							<div class="form-group full-width">
+								<label for="inputTitle" class="control-label">Заголовок</label>
+							  <input name="title" value="{{article.title}}"/>
+							</div>
+							<div class="form-group full-width">
+								<label for="inputText" class="control-label">Текст</label>
+							  <textarea name="text" rows="10" name="value">{{article.text}}</textarea>
+							</div>
+							<input name="id" type="hidden" value="{{article.id}}"/>
+							<div class="form-group">
+							  <button type="submit" class="button">Отправить</button>
+							</div>
+						</form>
+					</p>
+				</div>
             </li>
         </ul>
     </div>
 </div>
+
+
+
+
+
 <div class="footer">
     <center>© IT Atrractor Blog</center>
 </div>

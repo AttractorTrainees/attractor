@@ -69,3 +69,5 @@ class User(object):
     def set_attribute(self, attr, value):
         if hasattr(self, attr):
             setattr(self, attr, value)
+    def get_password(self):
+        return self.password

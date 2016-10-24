@@ -1,3 +1,6 @@
+from urllib.parse import unquote_plus
+
+
 def parse_http(string):
     lines = string.split(b"\r\n")
     query = lines[0].split(b' ', 2)
@@ -13,6 +16,7 @@ def parse_http(string):
 
 
 def query_parser(query):
+    query = unquote_plus(query.decode()).encode()
     query = query.replace(b'\r\n', b'')
     query = query.split(b"&")
     my_dict = {}
