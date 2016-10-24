@@ -5,7 +5,7 @@ from settings import database
 from tempate_engine import render
 from response import Response
 from parse import *
-from errors import handler_error, valid_error
+from errors import handler_error, valid_error, login_required
 from settings import TEMPLATES_DIR
 from session import Session
 
@@ -72,7 +72,7 @@ def logout(request):
     response.delete_cookie()
     return response.redirect('/')
 
-
+@login_required(error_code=3)
 def send_article(request):
     template_path = os.path.join(TEMPLATES_DIR, 'add_article.html')
     session = Session(request)
@@ -99,25 +99,10 @@ def add_article(request):
     return response.redirect('/')
 
 
-def login_required(redirect_url):
-    def login_checker(handler):
-        def login_check(request, id):
-            user = Session(request).find_session()
-            if user:
-                article = database.get_article('id', id)
-                if article:
-                    if article.author == user:
-                        return handler(request, id)
-                else:
-                    handler_error(request,404)
-            return Response().redirect(redirect_url)
-
-        return login_check
-
-    return login_checker
 
 
-@login_required(redirect_url='/login/')
+
+@login_required(error_code=2)
 def edit_article(request, id):
     template_path = os.path.join(TEMPLATES_DIR, 'edit_article.html')
     session = Session(request)
