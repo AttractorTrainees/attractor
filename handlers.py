@@ -36,7 +36,10 @@ def article(request, id):
         return handler_error((404,))
     session = Session(request)
     user = session.find_session()
-    context = {'article': article, 'user': user}
+    owner = False
+    if article.author == user:
+        owner = True
+    context = {'article': article, 'user': user, 'owner': owner}
     template_path = os.path.join(TEMPLATES_DIR, 'articles.html')
     rendered_body = render(template_path, context).encode()
     response = Response(body=rendered_body)
