@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="http://127.0.0.1:8000/static/css/style.css">
 </head>
 <body>
-<h1>{{code}}</h1>
-<h3>{{status}}</h3>
-<a href="/">Main</a>
+<div class="header-wrapper">
+     <div class="header">
+        <h2><a href="/" style="text-decoration: none">Attractor Blog</a></h2>
+     </div>
+</div>
+<div class="page-wrapper">
+    <div class="stream">
+        <ul class="stream-items">
+            <li>
+                <div class="item-body text-center">
+                    <p><h1>{{code}}</h1></p>
+                    <p><h2>{{status}}</h2></p>
+                    <p>Вернитесь на <a href="/">главную страницу сайта</a></p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="footer">
+    <center>© IT Atrractor Blog</center>
+</div>
+
 </body>
 </html>

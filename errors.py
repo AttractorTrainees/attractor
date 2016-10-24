@@ -1,7 +1,63 @@
 from tempate_engine import render
 from response import Response
-from settings import TEMPLATES_DIR
+from session import Session
+from settings import TEMPLATES_DIR, database
 import os
+
+_blog_codes = {
+    1: ('Вы ввели неверную комбинацию логина и пароля.'),
+    2: ('У вас недостаточно прав редактировать эту запись.'),
+    3: ('У вас недостаточно прав для добавления записи.'),
+    4: (),
+    5: ()
+}
+
+
+def login_required(error_code):
+    def login_checker(handler):
+        def login_check(request, id):
+            article = database.get_article('id', int(id.decode()))
+            print(article, id)
+            if article:
+                user = Session(request).find_session()
+                print('user->', user)
+                if user:
+                    if article.author == user:
+                        return handler(request, id)
+                    else:
+                        return valid_error(error_code, user)
+                else:
+                    return valid_error(error_code, user)
+            else:
+                return handler_error(request, 404)
+
+        def login_check_add(request):
+            user = Session(request).find_session()
+            if user:
+                return handler(request)
+            else:
+                return valid_error(error_code, user)
+
+        if error_code == 2:
+            return login_check
+        elif error_code == 3:
+            return login_check_add
+        else:  # создать exception
+            return handler_error(404)
+
+    return login_checker
+
+
+def valid_error(code, user):
+    error = _blog_codes[code]
+    context = {'title': error, 'Error': error, 'user': user}
+    body = render(os.path.join(TEMPLATES_DIR, 'info.html'), context).encode()
+    response = Response(body)
+    response.set_header(b'Content-Type', b'text/html')
+    response.set_code(b'200')
+    response.set_status(b'OK')
+    return response
+
 
 _codes = {
 
@@ -80,11 +136,11 @@ _codes = {
     507: ('insufficient_storage',),
     509: ('bandwidth_limit_exceeded', 'bandwidth'),
     510: ('not_extended',),
-    511: ('network_authentication_required', 'network_auth', 'network_authentication'),
+    511: ('network_authentication_required', 'network_auth', 'network_authentication')
 }
 
 
-def handler_error(request = None, *args):
+def handler_error(request=None, *args):
     template = 'error.html'
 
     code = args[0]

@@ -5,7 +5,7 @@ from settings import database
 from tempate_engine import render
 from response import Response
 from parse import *
-from errors import handler_error
+from errors import handler_error, valid_error, login_required
 from settings import TEMPLATES_DIR
 from session import Session
 
@@ -28,7 +28,6 @@ def index(request):
     response.set_status(b'OK')
     return response
 
-
 def article(request, id):
     id = int(id)
     article = database.get_article('id', id)
@@ -36,9 +35,7 @@ def article(request, id):
         return handler_error((404,))
     session = Session(request)
     user = session.find_session()
-    owner = False
-    if article.author == user:
-        owner = True
+    owner = True if article.author == user else False
     context = {'article': article, 'user': user, 'owner': owner}
     template_path = os.path.join(TEMPLATES_DIR, 'articles.html')
     rendered_body = render(template_path, context).encode()
@@ -62,13 +59,12 @@ def login(request):
 def sign_in(request):
     session = Session(request)
     sessionid = session.auth()
-    response = Response()
+    user = None
     if sessionid:
+        response = Response()
         response.set_cookie(sessionid)
-    else:
-        return handler_error(request, 404)
-    return response.redirect('/')
-
+        return response.redirect('/')
+    return valid_error(1, user)
 
 
 def logout(request):
@@ -76,7 +72,7 @@ def logout(request):
     response.delete_cookie()
     return response.redirect('/')
 
-
+@login_required(error_code=3)
 def send_article(request):
     template_path = os.path.join(TEMPLATES_DIR, 'add_article.html')
     session = Session(request)
@@ -103,6 +99,10 @@ def add_article(request):
     return response.redirect('/')
 
 
+
+
+
+@login_required(error_code=2)
 def edit_article(request, id):
     template_path = os.path.join(TEMPLATES_DIR, 'edit_article.html')
     session = Session(request)

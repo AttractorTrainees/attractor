@@ -1,5 +1,4 @@
-from datetime import datetime
-
+from datetime import datetime, time, timedelta
 from settings import *
 
 
@@ -21,8 +20,10 @@ class Response(object):
         self.headers.setdefault(b'Content-Length', str(len(self.body)).encode())
 
     def set_cookie(self, sessionid):
+        expires = datetime.utcnow() + timedelta(days=30)  # expires in 30 days
+        expires = expires.strftime("%a, %d %b %Y %H:%M:%S GMT")
         self.set_header(b'Set-cookie',
-                        b'SESSIONID=%s;  path=/; expires=Thu, 01 Jan 2020 00:00:00 GMT;' % sessionid.encode())
+                        b'SESSIONID=%s;  path=/; expires=%s;' % (sessionid.encode(), expires.encode()))
 
     def delete_cookie(self):
         self.set_header(b'Set-cookie', b'SESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/;')

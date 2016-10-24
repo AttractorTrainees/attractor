@@ -30,8 +30,8 @@
 <div class="page-wrapper">
     <div class="stream">
         <ul class="stream-items">
+			{% for article in articles %}
             <li>
-                {% for article in articles %}
                 <a href="/articles/{{article.id}}/">
                     <div class="item-header">
                         <div class="item-author">
@@ -46,9 +46,8 @@
                         <p>{{article.text}}</p>
                     </div>
                 </a>
-                {% end %}
             </li>
-
+			{% end %}
         </ul>
     </div>
 </div>
