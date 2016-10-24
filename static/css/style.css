@@ -84,7 +84,6 @@ body{
 	transition: all 0.2s ease 0s;
 }
 
-
 .stream-items li a:hover p, .header a:hover{
 	color: #7995bf;
 }
@@ -113,10 +112,6 @@ body{
 	float:left;
 }
 
-.item-footer{
-	
-}
-
 .form-horizontal .form-group{
 	padding: 5px 15px;
 }
@@ -134,11 +129,46 @@ body{
 
 .form-horizontal .button{
 	float:none;
-	padding: 5px 15px;
+	background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+	font-size: 16px;
+    padding: 8px 15px;
+}
+
+.form-horizontal .button:hover{
+	background-color: #286090;
+    border-color: #204d74;
+    color: #fff;
 }
 
 .form-group, .button{
 	text-align: center;
+}
+
+.form-group input{
+	background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    height: 30px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+.form-group textarea{
+	background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
 }
 
 .full-width textarea, .full-width input{
