@@ -29,7 +29,7 @@ class Session:
                         sessionid = self.generate_session(password)
                         user.set_attribute('sessionid', sessionid)
                         return sessionid
-                    return ("Ваши логин или пароль не соответствуют.")
+                    return False
             except AttributeError:
                 return False
         return False
