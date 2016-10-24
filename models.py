@@ -1,5 +1,5 @@
 from datetime import datetime
-
+DATE_FORMAT='%d %b %Y %H:%M:%S'
 
 class Article(object):
     def __init__(self, author, id=0, title='', text=''):
@@ -7,8 +7,9 @@ class Article(object):
         self.author = author
         self.title = title
         self.text = text
-        self.created_datetime = datetime.now()
-        self.updated_datetime = datetime.now()
+        self.created_datetime = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+        self.updated_datetime = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+
 
     def find_field_value(self, attr, value):
         if getattr(self, attr) == value:
