@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="static/css/style.css" rel="stylesheet">
+    <link href="http://127.0.0.1:8000/static/css/style.css" rel="stylesheet">
     <title>{{article.title}}</title>
 
 </head>
 <body>
 <div class="header-wrapper">
-    <div class="header">
+     <div class="header">
         <h2><a href="/" style="text-decoration: none">Attractor Blog</a></h2>
+
+    </div>
+    {% if user %}
+    <div class="button">
+        <a href="/logout/">Выйти</a>
     </div>
     <div class="button">
-        <a href="#">Войти</a>
+        <a href="/send_article/">Добавить запись</a>
     </div>
+    {% else %}
     <div class="button">
-        <a href="#">Выйти</a>
+        <a href="/login/">Войти</a>
     </div>
-    <div class="button">
-        <a href="#">Добавить запись</a>
-    </div>
+    {% end %}
     <div class="clearfix"></div>
 </div>
 <div class="page-wrapper">
@@ -29,7 +33,7 @@
             <li>
                 <div class="item-header">
                     <div class="item-author">
-                        <p>Автор: {{article.autor}}</p>
+                        <p>Автор: {{article.author}}</p>
                     </div>
                     <div class="item-time">
                         <p>Опубликованно: {{article.created_datetime}}</p>
@@ -39,13 +43,17 @@
                 <div class="item-body">
                     <p>{{article.text}}</p>
                 </div>
+
                 <div class="item-footer">
+                    {% if owner %}
                     <div class="item-edit button">
-                        <a href="#">Редактировать</a>
+                        <a href="/edit_article/{{article.id}}/">Редактировать</a>
                     </div>
                     <div class="item-delete button">
-                        <a href="#">Удалить</a>
+                        <a href="/delete_article/{{article.id}}/">Удалить</a>
                     </div>
+                    {% else %}
+                    {% end %}
                     <div class="clearfix"></div>
                 </div>
             </li>
