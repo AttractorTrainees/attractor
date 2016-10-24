@@ -1,11 +1,15 @@
 from unittest import TestCase
+
+from selenium.webdriver.common.keys import Keys
+
 from http_server import HTTPServer
 from settings import *
 import socket
 from routes import Route
 from handlers import *
 from request import *
-
+import selenium
+from selenium import webdriver
 
 
 routes = [Route(b'GET', b'/', index),
@@ -76,3 +80,16 @@ class TestRoutes(TestCase):
 
         self.assertGreater(buffer_size, data)
 
+
+class TestSelenium(TestCase):
+
+
+    def test_open_our_blog(self):
+        self.driver = webdriver.Firefox()
+        self.driver.get("http://localhost:8000")
+        self.elem = self.driver.find_element()
+        assert "No results found." not in self.driver.page_source
+
+
+    # def tearDown(self):
+    #     self.driver.close()
