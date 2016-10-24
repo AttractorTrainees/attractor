@@ -1,7 +1,27 @@
 from tempate_engine import render
 from response import Response
+from session import Session
 from settings import TEMPLATES_DIR
 import os
+
+_blog_codes = {
+    1: ('Вы ввели неверную комбинацию логина и пароля.'),
+    2: ('У вас недостаточно прав редактировать эту запись.'),
+    3: ('У вас недостаточно прав для добавления записи.'),
+    4: (),
+    5: ()
+}
+
+def valid_error(id, user):
+    code = id
+    error = _blog_codes[code]
+    context = {'title': error, 'Error': error, 'user': user}
+    body = render(os.path.join(TEMPLATES_DIR, 'info.html'), context).encode()
+    response = Response(body)
+    response.set_header(b'Content-Type', b'text/html')
+    response.set_code(b'200')
+    response.set_status(b'OK')
+    return response
 
 _codes = {
 
@@ -80,7 +100,7 @@ _codes = {
     507: ('insufficient_storage',),
     509: ('bandwidth_limit_exceeded', 'bandwidth'),
     510: ('not_extended',),
-    511: ('network_authentication_required', 'network_auth', 'network_authentication'),
+    511: ('network_authentication_required', 'network_auth', 'network_authentication')
 }
 
 

@@ -5,7 +5,7 @@ from settings import database
 from tempate_engine import render
 from response import Response
 from parse import *
-from errors import handler_error
+from errors import handler_error, valid_error
 from settings import TEMPLATES_DIR
 from session import Session
 
@@ -28,7 +28,6 @@ def index(request):
     response.set_status(b'OK')
     return response
 
-
 def article(request, id):
     id = int(id)
     article = database.get_article('id', id)
@@ -36,9 +35,7 @@ def article(request, id):
         return handler_error((404,))
     session = Session(request)
     user = session.find_session()
-    owner = False
-    if article.author == user:
-        owner = True
+    owner = True if article.author == user else False
     context = {'article': article, 'user': user, 'owner': owner}
     template_path = os.path.join(TEMPLATES_DIR, 'articles.html')
     rendered_body = render(template_path, context).encode()
@@ -62,10 +59,12 @@ def login(request):
 def sign_in(request):
     session = Session(request)
     sessionid = session.auth()
-    response = Response()
+    user = None
     if sessionid:
+        response = Response()
         response.set_cookie(sessionid)
-    return response.redirect('/')
+        return response.redirect('/')
+    return valid_error(1, user)
 
 
 def logout(request):
