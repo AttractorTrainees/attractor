@@ -3,6 +3,7 @@ body{
 	padding: 0;
 	padding-top: 90px;
 	background-color: #f4f4f4;
+	color:#222;
 }
 
 .text-center{
@@ -77,14 +78,15 @@ body{
 	border-bottom: 1px solid #ededed;
 }
 
-.stream-items li a{
+.stream-items li a, .header a{
 	text-decoration: none;
-	color: #000;
+	color:#222;
+	transition: all 0.2s ease 0s;
 }
 
 
-.stream-items li a:hover p{
-	color: #555;
+.stream-items li a:hover p, .header a:hover{
+	color: #7995bf;
 }
 
 .stream-items li:last-child{

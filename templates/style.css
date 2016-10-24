@@ -3,10 +3,19 @@ body{
 	padding: 0;
 	padding-top: 90px;
 	background-color: #f4f4f4;
+	color:#222;
+}
+
+.text-center{
+	text-align:center;
 }
 
 .clearfix{
 	clear: both;
+}
+
+.hidden{
+	visibility: hidden;
 }
 
 .header-wrapper{
@@ -69,16 +78,15 @@ body{
 	border-bottom: 1px solid #ededed;
 }
 
-.stream-items li a{
+.stream-items li a, .header a{
 	text-decoration: none;
+	color:#222;
+	transition: all 0.2s ease 0s;
 }
 
-.stream-items li a p{
-	color: 000;
-}
 
-.stream-items li a:hover p{
-	color: #555;
+.stream-items li a:hover p, .header a:hover{
+	color: #7995bf;
 }
 
 .stream-items li:last-child{
@@ -97,11 +105,42 @@ body{
 	float:left;
 }
 
+.item-time p{
+	text-align:right;
+}
+
+.item-author{
+	float:left;
+}
+
 .item-footer{
 	
 }
 
+.form-horizontal .form-group{
+	padding: 5px 15px;
+}
+
+.form-horizontal label{
+	font-size: 18px;
+	margin: 10px;
+	text-align: left;
+}
+
 .item-edit a, .item-delete a{
-	color: #fff;
-	padding: 5px 10px;
+	color: #fff !important;
+	padding: 10px 15px;
+}
+
+.form-horizontal .button{
+	float:none;
+	padding: 5px 15px;
+}
+
+.form-group, .button{
+	text-align: center;
+}
+
+.full-width textarea, .full-width input{
+	width: 100%;
 }
