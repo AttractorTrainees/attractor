@@ -3,6 +3,7 @@ from parse import *
 from request import Request
 from routing import Routing
 from routes import routes
+from errors import handler_error
 
 
 class HTTPServer:
@@ -31,21 +32,31 @@ class HTTPServer:
             self.socket.listen(1)
             conn, adr = self.socket.accept()
             self.getting_data(conn, routing)
-        print("Got connection from:", adr, "\n")
+            print("Got connection from:", adr, "\n")
 
     def getting_data(self, connection, routing):
         buffer_size = 4096
         data = self.recv_all_data(connection, buffer_size)
+        print(data)
         if data:
             query, header, body = parse_http(data)
 
-            request = Request(query, header, body)
+            #Check for right request, otherwise send response with status 400
+            try:
+                request = Request(query, header, body)
+            except Exception as e:
+                response = handler_error(400,)
+                connection.send(response.encode_http())
+                connection.close()
+                return
 
             handler, args = routing.handle_request(request)
             response = handler(request, *args)
             connection.send(response.encode_http())
+            connection.close()
+            return
 
-        connection.close()
+
 
     def recv_all_data(self, connection, buffer_size):
 

@@ -79,7 +79,7 @@ body{
 
 .stream-items li a{
 	text-decoration: none;
-	color: 000;
+	color: #000;
 }
 
 
@@ -115,7 +115,30 @@ body{
 	
 }
 
+.form-horizontal .form-group{
+	padding: 5px 15px;
+}
+
+.form-horizontal label{
+	font-size: 18px;
+	margin: 10px;
+	text-align: left;
+}
+
 .item-edit a, .item-delete a{
 	color: #fff !important;
 	padding: 10px 15px;
+}
+
+.form-horizontal .button{
+	float:none;
+	padding: 5px 15px;
+}
+
+.form-group, .button{
+	text-align: center;
+}
+
+.full-width textarea, .full-width input{
+	width: 100%;
 }
