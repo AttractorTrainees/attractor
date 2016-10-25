@@ -1,8 +1,11 @@
+from factory import Factory
 from tempate_engine import render
-from response import Response
-from session import Session
 from settings import TEMPLATES_DIR, database
 import os
+
+
+sessionFactory = Factory.SessionFactory()
+responseFactory = Factory.ResponseFactory()
 
 _blog_codes = {
     1: ('Вы ввели неверную комбинацию логина и пароля.'),
@@ -19,7 +22,7 @@ def login_required(error_code):
             article = database.get_article('id', int(id.decode()))
             print(article, id)
             if article:
-                user = Session(request).find_session()
+                user = sessionFactory.createSession(request).find_session()
                 print('user->', user)
                 if user:
                     if article.author == user:
@@ -32,7 +35,8 @@ def login_required(error_code):
                 return handler_error(request, 404)
 
         def login_check_add(request):
-            user = Session(request).find_session()
+            user = sessionFactory.createSession(request)
+            user = user.find_session()
             if user:
                 return handler(request)
             else:
@@ -52,7 +56,7 @@ def valid_error(code, user):
     error = _blog_codes[code]
     context = {'title': error, 'Error': error, 'user': user}
     body = render(os.path.join(TEMPLATES_DIR, 'info.html'), context).encode()
-    response = Response(body)
+    response = responseFactory.createResponse(body)
     response.set_header(b'Content-Type', b'text/html')
     response.set_code(b'200')
     response.set_status(b'OK')
@@ -151,7 +155,7 @@ def handler_error(request=None, *args):
     status_code = status_code.encode()
     status_text = status_text.encode()
     body = render(os.path.join(TEMPLATES_DIR, template), error).encode()
-    response = Response(body)
+    response = responseFactory.createResponse(body)
     response.set_code(status_code)
     response.set_status(status_text)
     return response

@@ -56,6 +56,7 @@ class MemoryDataAccessLayer(object):
     def add_article(self, article):
         self.articles.append(article)
 
+
     def get_all_articles_dict(self):  ##
         data_articles = []
         for article in self.articles:

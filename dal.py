@@ -1,3 +1,5 @@
+
+
 class DataBase:
     def __init__(self):
         """(article_id,content,author,date)"""
@@ -28,6 +30,7 @@ class DataBase:
 
 class GetData:
     def __init__(self):
+
         self.data_base = DataBase()
 
     def get_articles(self):

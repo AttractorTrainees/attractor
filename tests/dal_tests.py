@@ -3,20 +3,19 @@ from models import User, Article
 from data_access_layer import MemoryDataAccessLayer
 
 
-
 def create_some_queries():
     db = MemoryDataAccessLayer()
-    users = [User(id=1, firstname='Ivan', lastname='Ivanov', login='super_mega_user', password='12346'),
-             User(id=2, firstname='Petr', lastname='Petrov', login='peter_user', password='1234'),
-             User(id=3, firstname='John', lastname='Smith', login='john_user', password='123456'),
-             User(id=4, firstname='Aibek', lastname='Abdykasymov', login='aibek', password='12345789'), ]
+    users = [User(firstname='Ivan', lastname='Ivanov', login='super_mega_user', password='12346'),
+             User(firstname='Petr', lastname='Petrov', login='peter_user', password='1234'),
+             User(firstname='John', lastname='Smith', login='john_user', password='123456'),
+             User(firstname='Aibek', lastname='Abdykasymov', login='aibek', password='12345789'), ]
     acticles = [
-        Article(id=1, author=users[0], title='Article1', text='TextArticle1'),
-        Article(id=2, author=users[0], title='Article2', text='TextArticle2'),
-        Article(id=3, author=users[1], title='Article3', text='TextArticle3'),
-        Article(id=4, author=users[1], title='Article4', text='TextArticle4'),
-        Article(id=5, author=users[2], title='Article5', text='TextArticle5'),
-        Article(id=6, author=users[2], title='Article6', text='TextArticle6'),
+        Article(author=users[0], title='Article1', text='TextArticle1'),
+        Article(author=users[0], title='Article2', text='TextArticle2'),
+        Article(author=users[1], title='Article3', text='TextArticle3'),
+        Article(author=users[1], title='Article4', text='TextArticle4'),
+        Article(author=users[2], title='Article5', text='TextArticle5'),
+        Article(author=users[2], title='Article6', text='TextArticle6'),
     ]
     for article in acticles:
         db.add_article(article)
@@ -28,45 +27,38 @@ def create_some_queries():
     return db
 
 
-class ModelUserTest(unittest.TestCase):
-    def test_get_user_dict(self):
-        user = User(id=0, firstname='Ivan', lastname='Ivanov', login='super_mega_user', password='12345')
-        user_dict = {'id': 0, 'firstname': 'Ivan', 'lastname': 'Ivanov', 'login': 'super_mega_user'}
-        self.assertEqual(user.get_user_dict(), user_dict)
+# class ModelUserTest(unittest.TestCase):
 
-
+db = create_some_queries()
+print('allo')
 class DalUserTest(unittest.TestCase):
     def test_insert_and_get_user(self):
-        db = create_some_queries()
-        user = User(id=5, firstname='Leonard', lastname='Shepard', login='super_general', password='12345')
+        user = User(id=125, firstname='Leonard', lastname='Shepard', login='super_general', password='12345')
         db.add_user(user)
-        get_user = db.get_user('id', 5)
+        get_user = db.get_user('id', 125)
         self.assertEqual(user, get_user)
 
     def test_delete_user_from_db(self):
-        db = create_some_queries()
-        user = db.get_user('id', 1)
+        user = db.get_user('id', 4)
         self.assertTrue(db.delete_user(user))
 
     def test_update_user_from_db(self):
-        db = create_some_queries()
         id, firstname, lastname, login = 1, 'Lesli', 'Vaigen', 'lesli'
         updated_user = db.update_user(id, firstname, lastname, login)
 
-        user = db.get_user('id', 1)
-        self.assertEqual(user, updated_user)
+        self.assertEqual('Lesli', updated_user.firstname)
+        self.assertEqual('Vaigen', updated_user.lastname)
+        self.assertEqual('lesli', updated_user.login)
 
 
 class DalArticleTest(unittest.TestCase):
     def test_get_all_acticles_by_author(self):
-        db = create_some_queries()
-        author = db.get_user('id', 1)
+        author = db.get_user('login', 'super_mega_user')
         get_acticles = [db.get_article('id', 1), db.get_article('id', 2)]
         query_articles = db.get_all_articles_by_author(author)
         self.assertEqual(query_articles, get_acticles)
 
     def test_insert_and_get_article(self):
-        db = create_some_queries()
         author = db.get_user('id', 4)
         article = Article(id=7, author=author, title='New Article', text='Content-From-New-Article')
         db.add_article(article)
@@ -74,8 +66,7 @@ class DalArticleTest(unittest.TestCase):
         self.assertEqual(get_article, article)
 
     def test_delete_article(self):
-        db = create_some_queries()
-        article=db.get_article('id',1)
+        article = db.get_article('id', 4)
         self.assertTrue(db.delete_article(article))
 
     def test_update_article(self):
@@ -84,4 +75,3 @@ class DalArticleTest(unittest.TestCase):
         updated_article = db.update_article(id, title, text)
         article = db.get_article('id', 1)
         self.assertEqual(article, updated_article)
-

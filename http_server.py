@@ -1,7 +1,7 @@
 import socket
+
+from factory import Factory
 from parse import *
-from request import Request
-from routing import Routing
 from routes import routes
 from errors import handler_error
 
@@ -27,7 +27,9 @@ class HTTPServer:
         print("Server succesfully acquired the socket with port:", self.port)
         print("Waiting for connection\n")
 
-        routing = Routing(routes)
+        routingFactory = Factory.RoutingFactory()
+        routing = routingFactory.createRouting(routes)
+
         while True:
             self.socket.listen(1)
             conn, adr = self.socket.accept()
@@ -43,7 +45,8 @@ class HTTPServer:
 
             #Check for right request, otherwise send response with status 400
             try:
-                request = Request(query, header, body)
+                requestFactory = Factory.RequestFactory()
+                request = requestFactory.createRequest(query,header,body)
             except Exception as e:
                 response = handler_error(400,)
                 connection.send(response.encode_http())

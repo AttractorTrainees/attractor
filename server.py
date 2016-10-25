@@ -1,5 +1,7 @@
-from http_server import HTTPServer
+from factory import Factory
+
 
 if __name__ == "__main__":
-    server = HTTPServer()
+    factory = Factory.HTTPServerFactory()
+    server = factory.createHTTPServer()
     server.activate_server()
