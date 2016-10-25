@@ -28,11 +28,12 @@ def index(request):
     response.set_status(b'OK')
     return response
 
+
 def article(request, id):
-    id = int(id)
+    id = int(id.decode())
     article = database.get_article('id', id)
     if not article:
-        return handler_error((404,))
+        return handler_error(None, 404)
     session = Session(request)
     user = session.find_session()
     owner = True if article.author == user else False
@@ -72,6 +73,7 @@ def logout(request):
     response.delete_cookie()
     return response.redirect('/')
 
+
 @login_required(error_code=3)
 def send_article(request):
     template_path = os.path.join(TEMPLATES_DIR, 'add_article.html')
@@ -94,12 +96,9 @@ def add_article(request):
     article_data = query_parser(request.get_body())
     print(article_data)
     database.add_article(
-        Article(author=author, id=101, title=article_data[b'title'].decode(), text=article_data[b'text'].decode()))
+        Article(author=author, title=article_data[b'title'].decode(), text=article_data[b'text'].decode()))
     response = Response()
     return response.redirect('/')
-
-
-
 
 
 @login_required(error_code=2)
