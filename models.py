@@ -23,7 +23,7 @@ class Model(object):
             setattr(self, attr, value)
 
 
-class IdentityPermission(object):
+class IdentityMixin(object):
     counter = 0
 
     def identity(self, id=0):
@@ -39,7 +39,7 @@ class IdentityPermission(object):
         self.__class__.counter = counter
 
 
-class Article(Model, IdentityPermission):
+class Article(Model, IdentityMixin):
     def __init__(self, author, id=0, title='', text=''):
         self.id = self.identity(id)
         self.author = author
@@ -56,7 +56,7 @@ class Article(Model, IdentityPermission):
                                       self.created_datetime, self.updated_datetime)
 
 
-class User(Model, IdentityPermission):
+class User(Model, IdentityMixin):
     def __init__(self, id=0, firstname='', lastname='', login='', password='', sessionid=''):
         self.id = self.identity(id)
         self.firstname = firstname

@@ -156,10 +156,3 @@ def handler_error(request=None, *args):
     response.set_status(status_text)
     return response
 
-
-def text(request, *args):
-    print('ошибка', args)
-
-
-class HTTPError(Exception):
-    pass
