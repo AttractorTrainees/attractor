@@ -14,10 +14,10 @@
     </div>
     {% if user %}
     <div class="button">
-        <a href="/logout/">Выйти</a>
+        <a href="/logout/" name="logout">Выйти</a>
     </div>
     <div>
-        <span name="user_name">FUCK</span>
+        <span name="user_name">{{user}}</span>
     </div>
     <div class="button">
         <a href="/send_article/">Добавить запись</a>
