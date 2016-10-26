@@ -1,6 +1,5 @@
 import os
 from factory import Factory
-from dal import GetData
 from data_access_layer import MemoryDataAccessLayer
 from models import User, Article
 
@@ -16,7 +15,7 @@ articleFactory = Factory.ArticleFactory()
 
 database = MemoryDataAccessLayer()
 users = [userFactory.createUser(firstname='Ivan', lastname='Ivanov', login='super_mega_user', password='12346'),
-         userFactory.createUser(firstname='Petr', lastname='Petrov', login='peter_user', password='1234'),
+         userFactory.createUser(firstname='Petr', lastname='Petrov', login='peter_user', password='1234', sessionid='123'),
          userFactory.createUser(firstname='John', lastname='Smith', login='john_user', password='123456'),
          userFactory.createUser(firstname='Aibek', lastname='Abdykasymov', login='aibek', password='12345789'), ]
 acticles = [

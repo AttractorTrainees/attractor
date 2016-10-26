@@ -43,7 +43,7 @@ class Session:
                 if user.find_field_value('sessionid', self.request.get_cookie()):
                     return user
             except AttributeError:
-                return None
+                continue
         return None
 
     def generate_session(self, password):
