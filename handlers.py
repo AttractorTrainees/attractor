@@ -98,8 +98,9 @@ def add_article(request):
     author = session.find_session()
     article_data = query_parser(request.get_body())
     print(article_data)
-    database.add_article(
-        articleFactory.createArticle(author=author, title=article_data[b'title'].decode(), text=article_data[b'text'].decode()))
+    if author:
+        database.add_article(
+            articleFactory.createArticle(author=author, title=article_data[b'title'].decode(), text=article_data[b'text'].decode()))
     response = responseFactory.createResponse()
     return response.redirect('/')
 
@@ -123,10 +124,13 @@ def edit_article(request, id):
 
 
 def update_article(request):
+    session = sessionFactory.createSession(request)
+    author = session.find_session()
     article_data = query_parser(request.get_body())
     print(article_data)
-    database.update_article(id=int(article_data[b'id'].decode()), title=article_data[b'title'].decode(),
-                            text=article_data[b'text'].decode())
+    if author:
+        database.update_article(id=int(article_data[b'id'].decode()), title=article_data[b'title'].decode(),
+                                text=article_data[b'text'].decode())
     response = responseFactory.createResponse()
     return response.redirect('/')
 
