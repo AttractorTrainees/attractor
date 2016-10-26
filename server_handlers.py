@@ -1,10 +1,10 @@
 import os
 
-from factory import Factory
+from factory import ResponseFactory
 from settings import STATIC_DIR
 from errors import handler_error
 
-responseFactory = Factory.ResponseFactory()
+responseFactory = ResponseFactory()
 def static_handler(request, path):
     try:
         file = open(os.path.join(STATIC_DIR, path.decode()))

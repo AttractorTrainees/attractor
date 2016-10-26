@@ -1,8 +1,8 @@
-from factory import Factory
+from factory import RouteFactory
 from server_handlers import static_handler
 from handlers import index, contacts, article, login, sign_in, logout, add_article, send_article, edit_article, \
     update_article, delete_article
-factory = Factory.RouteFactory()
+factory = RouteFactory()
 routes = [
     factory.createRoute(b'GET', rb'^/', handler=index),
     factory.createRoute(b'GET', rb'^/articles/([0-9]+)/$', handler=article),

@@ -1,18 +1,17 @@
 import os
 
-from factory import Factory
-from models import Article
+from factory import SessionFactory
+from factory import ResponseFactory
+from factory import ArticleFactory
 from settings import database
 from tempate_engine import render
-from response import Response
 from parse import *
 from errors import handler_error, valid_error, login_required
 from settings import TEMPLATES_DIR
-from session import Session
 
-sessionFactory = Factory.SessionFactory()
-responseFactory = Factory.ResponseFactory()
-articleFactory = Factory.ArticleFactory()
+sessionFactory = SessionFactory()
+responseFactory = ResponseFactory()
+articleFactory = ArticleFactory()
 
 def open_html(template):
     file = open(os.path.join(TEMPLATES_DIR, template))

@@ -1,7 +1,7 @@
 import unittest
 from request import Request
 from session import Session
-from factory import Factory
+from factory import RoutingFactory
 from routes import routes
 from http_server import HTTPServer
 from parse import parse_http
@@ -37,7 +37,7 @@ class MockClient(object):
         self.server = server
 
     def __call__(self, url):
-        routingFactory = Factory.RoutingFactory()
+        routingFactory = RoutingFactory()
         routing = routingFactory.createRouting(routes)
         conn = MockConnection(b'GET ' + str.encode(url) + b' HTTP/1.1\r\nUser-Agent: Mozilla\r\n\r\n')
         self.server.getting_data(conn, routing)
