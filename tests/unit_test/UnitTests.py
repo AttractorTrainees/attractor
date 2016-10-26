@@ -1,11 +1,12 @@
+import handlers
 from unittest import TestCase
 from parse import *
-from factory import RequestFactory
+from factory import RequestFactory, RoutingFactory
 from parse import parse_http, multipart_parser
 from routing import *
-import handlers
-from session import Session
+from request import Request
 from routes import routes
+from session import Session
 from http_server import HTTPServer
 from tests.multipart_data import multipart
 
