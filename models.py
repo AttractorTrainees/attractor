@@ -40,7 +40,7 @@ class IdentityPermission(object):
 
 
 class Article(Model, IdentityPermission):
-    def __init__(self, author, id, title, text):
+    def __init__(self, author='', id=0, title='', text=''):
         self.id = self.identity(id)
         self.author = author
         self.title = title
@@ -57,7 +57,7 @@ class Article(Model, IdentityPermission):
 
 
 class User(Model, IdentityPermission):
-    def __init__(self, id, firstname, lastname, login, password, sessionid):
+    def __init__(self, id=0, firstname='', lastname='', login='', password='', sessionid=''):
         self.id = self.identity(id)
         self.firstname = firstname
         self.lastname = lastname

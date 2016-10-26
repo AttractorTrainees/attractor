@@ -15,15 +15,19 @@ def step(context, url):
 
 @then("push button with text '{text}'")
 def step(context, text):
-    WebDriverWait(context.browser, 10).until(
+    WebDriverWait(context.browser, 40).until(
         EC.element_to_be_clickable((By.CLASS_NAME, 'button'))
     )
+    # try:
+    #     context.browser.find_element_by_class_name('button').click()
+    # except Exception as e:
     context.browser.find_element_by_class_name('button').click()
+
 
 
 @then("login page '{text}'")
 def step(context, text):
-    WebDriverWait(context.browser, 20).until(
+    WebDriverWait(context.browser, 40).until(
         EC.presence_of_element_located((By.XPATH, '//*[contains(text(), "%s")]' % text))
     )
     username = context.browser.find_element_by_name('username')
@@ -154,14 +158,14 @@ def step(context, text):
     except Exception as e:
         context.browser.find_element_by_xpath('//*[contains(text(), "%s")]' % text).click()
 
-
-@then("again push button with text '{text}'")
-def step(context, text):
-    WebDriverWait(context.browser, 40).until(
-        EC.element_to_be_clickable((By.XPATH, '//*[contains(text(), "%s")]' % text))
-    )
-    context.browser.find_element_by_xpath('//*[contains(text(), "%s")]' % text).click()
-
+#
+# @then("again push button with text '{text}'")
+# def step(context, text):
+#     WebDriverWait(context.browser, 40).until(
+#         EC.element_to_be_clickable((By.XPATH, '//*[contains(text(), "%s")]' % text))
+#     )
+#     context.browser.find_element_by_xpath('//*[contains(text(), "%s")]' % text).click()
+#
 
 @then("wrong login '{text}'")
 def step(context, text):
@@ -184,6 +188,8 @@ def step(context, text):
     WebDriverWait(context.browser, 40).until(
         EC.presence_of_element_located((By.XPATH, '//*[contains(text(), "%s")]' % text))
     )
-    assert context.browser.find_element_by_xpath('//*[contains(text(), "%s")]' % text)
     time.sleep(3)
+    assert context.browser.find_element_by_xpath('//*[contains(text(), "%s")]' % text)
     context.browser.quit()
+
+

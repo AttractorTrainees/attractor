@@ -30,7 +30,7 @@ def create_some_queries():
 # class ModelUserTest(unittest.TestCase):
 
 db = create_some_queries()
-print('allo')
+
 class DalUserTest(unittest.TestCase):
     def test_insert_and_get_user(self):
         user = User(id=125, firstname='Leonard', lastname='Shepard', login='super_general', password='12345')

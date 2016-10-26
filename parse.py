@@ -26,8 +26,8 @@ def query_parser(query):
     return my_dict
 
 
-def multipart_parser(multipart, request):
-    header = request.get_header()
+def multipart_parser(multipart,request):
+    header = request.get_headers()
     boundary = b"--" + header[b'CONTENT-TYPE'].split(b"; ")[1].split(b"=")[1]
 
     multipart = multipart.split(boundary)
