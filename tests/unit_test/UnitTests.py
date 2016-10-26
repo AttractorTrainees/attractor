@@ -1,10 +1,8 @@
 from unittest import TestCase
 from parse import *
-from factory import Factory
+from factory import RequestFactory
 from parse import parse_http, multipart_parser
-from request import Request
 from routing import *
-from routes import *
 import handlers
 from tests.multipart_data import multipart
 
@@ -28,7 +26,7 @@ class TestQuery_parser(TestCase):
 class TestMultipart_parser(TestCase):
     def test_multipart_parser(self):
         query, header, body = parse_http(multipart)
-        multipart_request = Factory.RequestFactory().createRequest(query, header, body)
+        multipart_request = RequestFactory().createRequest(query, header, body)
         multipart_parsed = multipart_parser(body, multipart_request)
 
         self.assertEqual(3, len(multipart_parsed))
@@ -41,7 +39,7 @@ class TestRouting(TestCase):
     def test_handle_request(self):
         string = b'GET / HTTP/1.1\r\nHost: localhost:8000\r\nConnection: keep-alive\r\nCache-Control: max-age=0\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.92 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\nAccept-Encoding: gzip, deflate, sdch\r\nAccept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4\r\nCookie: Pycharm-46659b5b=1c84beb3-f64b-4038-82fb-06887ca9fd50; csrftoken=xXVqimJCWPtiyQfIy3G5yhFph1Ffl4xu\r\n\r\n'
         query, header, body = parse_http(string)
-        requestFactory = Factory.RequestFactory()
+        requestFactory = RequestFactory()
         request = requestFactory.createRequest(query, header, body)
         print(request)
         routing = Routing(routes)
@@ -55,7 +53,7 @@ class TestRouting(TestCase):
 import unittest
 from request import Request
 from session import Session
-from factory import Factory
+from factory import RoutingFactory
 from routes import routes
 from http_server import HTTPServer
 from parse import parse_http
@@ -91,7 +89,7 @@ class MockClient(object):
         self.server = server
 
     def __call__(self, url):
-        routingFactory = Factory.RoutingFactory()
+        routingFactory = RoutingFactory()
         routing = routingFactory.createRouting(routes)
         conn = MockConnection(b'GET ' + str.encode(url) + b' HTTP/1.1\r\nUser-Agent: Mozilla\r\n\r\n')
         self.server.getting_data(conn, routing)

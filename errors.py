@@ -1,11 +1,12 @@
-from factory import Factory
+from factory import SessionFactory
+from factory import ResponseFactory
 from tempate_engine import render
 from settings import TEMPLATES_DIR, database
 import os
 
 
-sessionFactory = Factory.SessionFactory()
-responseFactory = Factory.ResponseFactory()
+sessionFactory = SessionFactory()
+responseFactory = ResponseFactory()
 
 _blog_codes = {
     1: ('Вы ввели неверную комбинацию логина и пароля.'),
