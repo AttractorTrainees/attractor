@@ -76,6 +76,7 @@ class HTTPServer:
                 continue
             msglen = len(data)
             chunks.append(data)
+            print(chunks)
             data = EMPTY_BYTES.join(chunks)
             del chunks
             return data
