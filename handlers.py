@@ -128,7 +128,7 @@ def update_article(request):
     article_data = query_parser(request.get_body())
     print(article_data)
     if author:
-        database.update_article(id=int(article_data['id']), title=article_data[b'title'],
+        database.update_article(id=int(article_data['id']), title=article_data['title'],
                                 text=article_data['text'])
     response = responseFactory.createResponse()
     return response.redirect('/')
