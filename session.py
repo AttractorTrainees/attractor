@@ -20,8 +20,8 @@ class Session:
         return post
 
     def login(self, post):
-        login = post[b'username'].decode()
-        password = post[b'password'].decode()
+        login = post['username']
+        password = post['password']
         for user in database.get_all_users():
             try:
                 if user.find_field_value('login', login):

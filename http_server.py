@@ -40,7 +40,7 @@ class HTTPServer:
     def getting_data(self, connection, routing):
         buffer_size = 4096
         data = self.recv_all_data(connection, buffer_size)
-        print(data)
+        data = data.decode()
         if data:
             query, header, body = parse_http(data)
 
@@ -50,13 +50,15 @@ class HTTPServer:
                 request = requestFactory.createRequest(query,header,body)
             except Exception as e:
                 response = handler_error(400,)
-                connection.send(response.encode_http())
+                connection.send(response.encode_http().encode())
                 connection.close()
                 return
 
             handler, args = routing.handle_request(request)
             response = handler(request, *args)
-            connection.send(response.encode_http())
+            response = response.encode_http()
+            connection.send(response)
+
             connection.close()
             return
 

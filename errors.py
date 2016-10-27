@@ -20,7 +20,7 @@ _blog_codes = {
 def login_required(error_code):
     def login_checker(handler):
         def login_check(request, id):
-            article = database.get_article('id', int(id.decode()))
+            article = database.get_article('id', int(id))
             print(article, id)
             if article:
                 user = sessionFactory.createSession(request).find_session()
@@ -56,11 +56,11 @@ def login_required(error_code):
 def valid_error(code, user):
     error = _blog_codes[code]
     context = {'title': error, 'Error': error, 'user': user}
-    body = render(os.path.join(TEMPLATES_DIR, 'info.html'), context).encode()
+    body = render(os.path.join(TEMPLATES_DIR, 'info.html'), context)
     response = responseFactory.createResponse(body)
-    response.set_header(b'Content-Type', b'text/html')
-    response.set_code(b'200')
-    response.set_status(b'OK')
+    response.set_header('Content-Type', 'text/html')
+    response.set_code('200')
+    response.set_status('OK')
     return response
 
 
@@ -153,9 +153,9 @@ def handler_error(request=None, *args):
     status_code = str(code)
     status_text = _codes[code][0].upper()
     error = {'title': status_code + status_text, 'code': status_code, 'status': status_text}
-    status_code = status_code.encode()
-    status_text = status_text.encode()
-    body = render(os.path.join(TEMPLATES_DIR, template), error).encode()
+    status_code = status_code
+    status_text = status_text
+    body = render(os.path.join(TEMPLATES_DIR, template), error)
     response = responseFactory.createResponse(body)
     response.set_code(status_code)
     response.set_status(status_text)

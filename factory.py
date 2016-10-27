@@ -17,7 +17,7 @@ class RequestFactory(object):
 
 
 class ResponseFactory(object):
-    def createResponse(self, body=b''):
+    def createResponse(self, body=''):
         from response import Response
         return Response(body)
 
