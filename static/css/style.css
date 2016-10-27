@@ -34,6 +34,12 @@ body{
 
 }
 
+.greeting{
+	padding: 25px 25px;
+	color: #286090;
+	float:left;
+}
+
 .button{
 	padding: 15px 15px;
     text-align: center;
