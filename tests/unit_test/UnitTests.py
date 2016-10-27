@@ -93,6 +93,13 @@ class TestServer(TestCase):
         self.assertEqual(reply, ['HTTP/1.1', '404', 'NOT_FOUND'])
         self.assertEqual(headers['SERVER'], 'BlogServer/0.1')
 
+    def test_200(self):
+        server = HTTPServer()
+        client = MockClient(server)
+        reply, headers, body = client('/')
+        self.assertEqual(reply, ['HTTP/1.1', '200', 'OK'])
+        self.assertEqual(headers['SERVER'], 'BlogServer/0.1')
+
 class TestSessions(TestCase):
 
     def test_auth(self):
