@@ -1,18 +1,22 @@
+import handlers
 from unittest import TestCase
 from parse import *
-from factory import RequestFactory
+from factory import RequestFactory, RoutingFactory
 from parse import parse_http, multipart_parser
 from routing import *
-import handlers
+from request import Request
+from routes import routes
+from session import Session
+from http_server import HTTPServer
 from tests.multipart_data import multipart
 
 
 class TestParse_http(TestCase):
     def test_parse_http(self):
-        string = b'GET / HTTP/1.1\r\nHost: localhost:8000\r\nConnection: keep-alive\r\nCache-Control: max-age=0\r\nUpgrade-Insecure-Requests: 1\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.92 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\r\nAccept-Encoding: gzip, deflate, sdch\r\nAccept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4\r\nCookie: Pycharm-46659b5b=1c84beb3-f64b-4038-82fb-06887ca9fd50; csrftoken=xXVqimJCWPtiyQfIy3G5yhFph1Ffl4xu\r\n\r\n'
+        string = b'GET / HTTP/1.1\r\nUser-Agent: Mozilla\r\n\r\n'
         query, header, body = parse_http(string)
         self.assertEqual(query, [b'GET', b'/', b'HTTP/1.1'])
-        self.assertTrue(header, True)
+        self.assertEqual(header, {b'USER-AGENT':b'Mozilla'})
         self.assertEqual(body, b'\r\n')
 
 
@@ -28,9 +32,7 @@ class TestMultipart_parser(TestCase):
         query, header, body = parse_http(multipart)
         multipart_request = RequestFactory().createRequest(query, header, body)
         multipart_parsed = multipart_parser(body, multipart_request)
-
         self.assertEqual(3, len(multipart_parsed))
-
         list_of_keys = ['body', 'name', 'form']
         self.assertEqual(set(list(multipart_parsed[0].keys())), set(list_of_keys))
 
@@ -41,22 +43,10 @@ class TestRouting(TestCase):
         query, header, body = parse_http(string)
         requestFactory = RequestFactory()
         request = requestFactory.createRequest(query, header, body)
-        print(request)
         routing = Routing(routes)
         handler, args = routing.handle_request(request)
 
         self.assertEqual(handler, handlers.index)
-
-
-######
-
-import unittest
-from request import Request
-from session import Session
-from factory import RoutingFactory
-from routes import routes
-from http_server import HTTPServer
-from parse import parse_http
 
 class CreateRequest(object):
     def __init__(self):
@@ -95,19 +85,15 @@ class MockClient(object):
         self.server.getting_data(conn, routing)
         return parse_http(conn.sent)
 
-class TestServer(unittest.TestCase):
+class TestServer(TestCase):
     def test_404(self):
         server = HTTPServer()
         client = MockClient(server)
         reply, headers, body = client('/test/test')
-        print(reply)
-        print(headers)
-        print(body)
         self.assertEqual(reply, [b'HTTP/1.1', b'404', b'NOT_FOUND'])
         self.assertEqual(headers[b'SERVER'], b'BlogServer/0.1')
 
-
-class TestSessions(unittest.TestCase):
+class TestSessions(TestCase):
 
     def test_auth(self):
         body = b'\r\nusername=john_user&password=123456'
@@ -124,7 +110,7 @@ class TestSessions(unittest.TestCase):
         self.assertNotEqual(user, None)
 
 
-class TestResponse(unittest.TestCase):
+class TestResponse(TestCase):
     def test_response(self):
         pass
 
