@@ -3,7 +3,7 @@ from settings import *
 
 
 class Response(object):
-    def __init__(self, body=b''):
+    def __init__(self, body):
         # self.version = request.get_version()
         # self.path = request.get_path()
         # self.method = request.get_method()
@@ -18,6 +18,7 @@ class Response(object):
         self.headers.setdefault(b'Server', SERVER_NAME)
         self.headers.setdefault(b'Date', datetime.now().ctime().encode())
         self.headers.setdefault(b'Content-Length', str(len(self.body)).encode())
+
 
     def set_cookie(self, sessionid):
         expires = datetime.utcnow() + timedelta(days=30)  # expires in 30 days
