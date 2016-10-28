@@ -82,7 +82,7 @@ class MockClient(object):
         routingFactory = RoutingFactory()
         routing = routingFactory.createRouting(routes)
         conn = MockConnection(b'GET ' + url.encode() + b' HTTP/1.1\r\nUser-Agent: Mozilla\r\n\r\n')
-        self.server.getting_data(conn, routing)
+        self.server.get_data(conn, routing)
         return parse_http(conn.sent.decode())
 
 class TestServer(TestCase):

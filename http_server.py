@@ -11,8 +11,13 @@ class HTTPServer:
     def __init__(self, port=8000):
         self.host = 'localhost'
         self.port = port
+        self.request_factory = None
+        self.routing_factory = None
+        self.routing = None
+
 
     def activate_server(self):
+        self.routing = self.routing_factory.createRouting(routes)
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -28,16 +33,13 @@ class HTTPServer:
         print("Server succesfully acquired the socket with port:", self.port)
         print("Waiting for connection\n")
 
-        routingFactory = RoutingFactory()
-        routing = routingFactory.createRouting(routes)
-
         while True:
             self.socket.listen(1)
             conn, adr = self.socket.accept()
-            self.getting_data(conn, routing)
+            self.get_data(conn)
             print("Got connection from:", adr, "\n")
 
-    def getting_data(self, connection, routing):
+    def get_data(self, connection):
         buffer_size = 4096
         data = self.recv_all_data(connection, buffer_size)
         data = data.decode()
@@ -46,15 +48,14 @@ class HTTPServer:
 
             #Check for right request, otherwise send response with status 400
             try:
-                requestFactory = RequestFactory()
-                request = requestFactory.createRequest(query,header,body)
+                request = self.request_factory.createRequest(query,header,body)
             except Exception as e:
                 response = handler_error(400,)
                 connection.send(response.encode_http().encode())
                 connection.close()
                 return
 
-            handler, args = routing.handle_request(request)
+            handler, args = self.routing.handle_request(request)
             response = handler(request, *args)
             response = response.encode_http()
             connection.send(response)
@@ -62,10 +63,7 @@ class HTTPServer:
             connection.close()
             return
 
-
-
     def recv_all_data(self, connection, buffer_size):
-
         msglen = 0
         chunks = []
         EMPTY_BYTES = b''
