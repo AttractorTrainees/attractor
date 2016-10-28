@@ -1,73 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="http://127.0.0.1:8000/static/css/style.css">
-</head>
-<body>
-<div class="header-wrapper">
-     <div class="header">
-        <h2><a href="/" style="text-decoration: none">Attractor Blog</a></h2>
-
-    </div>
-    {% if user %}
-    <div class="button">
-        <a href="/logout/">Выйти</a>
-    </div>
-    <div class="greeting">
-        <span name="user_name">Добро пожаловать {{user}}</span>
-    </div>
-    <div class="button">
-        <a href="/send_article/">Добавить запись</a>
-    </div>
-    {% else %}
-    <div class="button">
-        <a href="/login/">Войти</a>
-    </div>
-    {% end %}
-    <div class="clearfix"></div>
-</div>
-
-
-
-
-
+{% extend 'base.html' %}
+{% block title %}
+Добавить статью
+{% endblock %}
+{% block content %}
 <div class="page-wrapper">
     <div class="stream">
         <ul class="stream-items">
             <li>
-				<div class="item-body">
-					<p>
-						<form class="form-horizontal" action="/add_article/" method="post">
-							<div class="form-group full-width">
-								<label for="inputTitle" class="control-label">Заголовок</label>
-							  <input name="title" value=""/>
-							</div>
-							<div class="form-group full-width">
-								<label for="inputText" class="control-label">Текст</label>
-							  <textarea name="text" rows="10" name="value"></textarea>
-							</div>
-							<input name="id" type="hidden" value="0"/>
-							<div class="form-group">
-							  <button type="submit" class="button" name="add_article">Отправить</button>
-							</div>
-						</form>
-					</p>
-				</div>
+                <div class="item-body">
+                    <p>
+                    <form class="form-horizontal" action="/add_article/" method="post">
+                        <div class="form-group full-width">
+                            <label for="inputTitle" class="control-label">Заголовок</label>
+                            <input name="title" value=""/>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="inputText" class="control-label">Текст</label>
+                            <textarea name="text" rows="10" name="value"></textarea>
+                        </div>
+                        <input name="id" type="hidden" value="0"/>
+                        <div class="form-group">
+                            <button type="submit" class="button" name="add_article">Отправить</button>
+                        </div>
+                    </form>
+                    </p>
+                </div>
             </li>
         </ul>
     </div>
 </div>
-
-
-
-
-
-<div class="footer">
-    <center>© IT Atrractor Blog</center>
-</div>
-
-</body>
-</html>
+{% endblock %}

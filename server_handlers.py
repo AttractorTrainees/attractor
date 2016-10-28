@@ -9,7 +9,6 @@ def static_handler(request, path):
     try:
         file = open(os.path.join(STATIC_DIR, path))
         static_body = "".join(file.readlines())
-        print(static_body)
         response = responseFactory.createResponse(body=static_body)
         response.set_header('Content-Type', 'text/css')
         response.set_code('200')

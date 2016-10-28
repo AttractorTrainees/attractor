@@ -1,5 +1,6 @@
 from factory import SessionFactory
 from factory import ResponseFactory
+from new_template_engine import TemplateEngine
 from tempate_engine import render
 from settings import TEMPLATES_DIR, database
 import os
@@ -59,7 +60,7 @@ def login_required(error_code):
 def valid_error(code, user):
     error = _blog_codes[code]
     context = {'title': error, 'Error': error, 'user': user}
-    body = render(os.path.join(TEMPLATES_DIR, 'info.html'), context)
+    body = TemplateEngine.render_template('info.html', context)
     response = responseFactory.createResponse(body)
     response.set_header('Content-Type', 'text/html')
     response.set_code('200')

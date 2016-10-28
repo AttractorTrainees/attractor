@@ -5,6 +5,7 @@ from factory import ResponseFactory
 from factory import ArticleFactory
 from settings import database
 from tempate_engine import render
+from new_template_engine import TemplateEngine
 from parse import *
 from errors import handler_error, valid_error, login_required, LOGIN_FAILED_ERROR, CREATE_PERMISSION_DENIED_ERROR, EDIT_PERMISSION_DENIED_ERROR
 from settings import TEMPLATES_DIR
@@ -13,18 +14,13 @@ sessionFactory = SessionFactory()
 responseFactory = ResponseFactory()
 articleFactory = ArticleFactory()
 
-def open_html(template):
-    file = open(os.path.join(TEMPLATES_DIR, template))
-    html = file.readlines()
-    return ''.join(html)
-
 
 def index(request):
     session = sessionFactory.createSession(request)
     user = session.find_session()
     articles = database.get_all_articles()
     context = {'articles': articles, 'user': user}
-    rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context)
+    rendered_body = TemplateEngine.render_template('index.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header('Content-Type', 'text/html')
     response.set_code('200')
@@ -41,8 +37,7 @@ def article(request, id):
     user = session.find_session()
     owner = True if article.author == user else False
     context = {'article': article, 'user': user, 'owner': owner}
-    template_path = os.path.join(TEMPLATES_DIR, 'articles.html')
-    rendered_body = render(template_path, context)
+    rendered_body = TemplateEngine.render_template('articles.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header('Content-Type', 'text/html')
     response.set_status('OK')
@@ -50,9 +45,8 @@ def article(request, id):
 
 
 def login(request):
-    template_path = os.path.join(TEMPLATES_DIR, 'login.html')
     context = {'title': 'Авторизация', 'user': None}
-    rendered_body = render(template_path, context)
+    rendered_body = TemplateEngine.render_template('login.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header('Content-Type', 'text/html')
     response.set_code('200')
@@ -79,12 +73,11 @@ def logout(request):
 
 @login_required(error_code=CREATE_PERMISSION_DENIED_ERROR)
 def send_article(request):
-    template_path = os.path.join(TEMPLATES_DIR, 'add_article.html')
     session = sessionFactory.createSession(request)
     user = session.find_session()
     context = {'title': 'Добавить статью', 'user': user}
 
-    rendered_body = render(template_path, context)
+    rendered_body = TemplateEngine.render_template('add_article.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header('Content-Type', 'text/html')
     response.set_code('200')
@@ -106,14 +99,12 @@ def add_article(request):
 
 @login_required(error_code=EDIT_PERMISSION_DENIED_ERROR)
 def edit_article(request, id):
-    template_path = os.path.join(TEMPLATES_DIR, 'edit_article.html')
     session = sessionFactory.createSession(request)
     user = session.find_session()
     article = database.get_article('id', int(id))
-    print('***********************************', article)
     context = {'title': 'Редактировать статью', 'user': user, 'article': article}
 
-    rendered_body = render(template_path, context)
+    rendered_body = TemplateEngine.render_template('edit_article.html', context)
 
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header('Content-Type', 'text/html')
