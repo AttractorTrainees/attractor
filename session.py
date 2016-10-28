@@ -20,8 +20,8 @@ class Session:
         return post
 
     def login(self, post):
-        login = post[b'username'].decode()
-        password = post[b'password'].decode()
+        login = post['username']
+        password = post['password']
         for user in database.get_all_users():
             try:
                 if user.find_field_value('login', login):
@@ -43,7 +43,7 @@ class Session:
                 if user.find_field_value('sessionid', self.request.get_cookie()):
                     return user
             except AttributeError:
-                return None
+                continue
         return None
 
     def generate_session(self, password):

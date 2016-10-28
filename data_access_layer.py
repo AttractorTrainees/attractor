@@ -6,7 +6,8 @@ class MemoryDataAccessLayer(object):
         self.users = []
         self.articles = []
 
-    ##User options
+
+    # User options
     def add_user(self, user):
         self.users.append(user)
 
@@ -51,6 +52,7 @@ class MemoryDataAccessLayer(object):
                 return []
         return get_articles
 
+
     def add_article(self, article):
         self.articles.append(article)
 
@@ -69,6 +71,7 @@ class MemoryDataAccessLayer(object):
             except AttributeError:
                 print('Поле %s модели Article не найдено' % attr)
                 return None
+
 
     def get_all_articles(self):
         return self.articles

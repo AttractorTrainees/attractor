@@ -20,7 +20,7 @@ class Routing(object):
             else:
                 return handler_error, (400,)
 
-        if version != b'HTTP/1.1':
+        if version != 'HTTP/1.1':
             return handler_error, (505,)
 
         for route in self.routes:

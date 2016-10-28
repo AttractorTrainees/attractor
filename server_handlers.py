@@ -1,19 +1,19 @@
 import os
 
-from factory import Factory
+from factory import ResponseFactory
 from settings import STATIC_DIR
 from errors import handler_error
 
-responseFactory = Factory.ResponseFactory()
+responseFactory = ResponseFactory()
 def static_handler(request, path):
     try:
-        file = open(os.path.join(STATIC_DIR, path.decode()))
-        static_body = "".join(file.readlines()).encode()
+        file = open(os.path.join(STATIC_DIR, path))
+        static_body = "".join(file.readlines())
         print(static_body)
         response = responseFactory.createResponse(body=static_body)
-        response.set_header(b'Content-Type', b'text/css')
-        response.set_code(b'200')
-        response.set_status(b'OK')
+        response.set_header('Content-Type', 'text/css')
+        response.set_code('200')
+        response.set_status('OK')
         return response
     except Exception:
         return handler_error(request, 404)

@@ -1,18 +1,17 @@
 import os
 
-from factory import Factory
-from models import Article
+from factory import SessionFactory
+from factory import ResponseFactory
+from factory import ArticleFactory
 from settings import database
 from tempate_engine import render
-from response import Response
 from parse import *
 from errors import handler_error, valid_error, login_required
 from settings import TEMPLATES_DIR
-from session import Session
 
-sessionFactory = Factory.SessionFactory()
-responseFactory = Factory.ResponseFactory()
-articleFactory = Factory.ArticleFactory()
+sessionFactory = SessionFactory()
+responseFactory = ResponseFactory()
+articleFactory = ArticleFactory()
 
 def open_html(template):
     file = open(os.path.join(TEMPLATES_DIR, template))
@@ -25,16 +24,16 @@ def index(request):
     user = session.find_session()
     articles = database.get_all_articles()
     context = {'articles': articles, 'user': user}
-    rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context).encode()
+    rendered_body = render(os.path.join(TEMPLATES_DIR, 'index.html'), context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header(b'Content-Type', b'text/html')
-    response.set_code(b'200')
-    response.set_status(b'OK')
+    response.set_header('Content-Type', 'text/html')
+    response.set_code('200')
+    response.set_status('OK')
     return response
 
 
 def article(request, id):
-    id = int(id.decode())
+    id = int(id)
     article = database.get_article('id', id)
     if not article:
         return handler_error(None, 404)
@@ -43,21 +42,21 @@ def article(request, id):
     owner = True if article.author == user else False
     context = {'article': article, 'user': user, 'owner': owner}
     template_path = os.path.join(TEMPLATES_DIR, 'articles.html')
-    rendered_body = render(template_path, context).encode()
+    rendered_body = render(template_path, context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header(b'Content-Type', b'text/html')
-    response.set_status(b'OK')
+    response.set_header('Content-Type', 'text/html')
+    response.set_status('OK')
     return response
 
 
 def login(request):
     template_path = os.path.join(TEMPLATES_DIR, 'login.html')
     context = {'title': 'Авторизация', 'user': None}
-    rendered_body = render(template_path, context).encode()
+    rendered_body = render(template_path, context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header(b'Content-Type', b'text/html')
-    response.set_code(b'200')
-    response.set_status(b'OK')
+    response.set_header('Content-Type', 'text/html')
+    response.set_code('200')
+    response.set_status('OK')
     return response
 
 
@@ -85,11 +84,11 @@ def send_article(request):
     user = session.find_session()
     context = {'title': 'Добавить статью', 'user': user}
 
-    rendered_body = render(template_path, context).encode()
+    rendered_body = render(template_path, context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header(b'Content-Type', b'text/html')
-    response.set_code(b'200')
-    response.set_status(b'OK')
+    response.set_header('Content-Type', 'text/html')
+    response.set_code('200')
+    response.set_status('OK')
     return response
 
 
@@ -98,8 +97,9 @@ def add_article(request):
     author = session.find_session()
     article_data = query_parser(request.get_body())
     print(article_data)
-    database.add_article(
-        articleFactory.createArticle(author=author, title=article_data[b'title'].decode(), text=article_data[b'text'].decode()))
+    if author:
+        database.add_article(
+            articleFactory.createArticle(author=author, title=article_data['title'], text=article_data['text']))
     response = responseFactory.createResponse()
     return response.redirect('/')
 
@@ -109,30 +109,33 @@ def edit_article(request, id):
     template_path = os.path.join(TEMPLATES_DIR, 'edit_article.html')
     session = sessionFactory.createSession(request)
     user = session.find_session()
-    article = database.get_article('id', int(id.decode()))
+    article = database.get_article('id', int(id))
     print('***********************************', article)
     context = {'title': 'Редактировать статью', 'user': user, 'article': article}
 
-    rendered_body = render(template_path, context).encode()
+    rendered_body = render(template_path, context)
 
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header(b'Content-Type', b'text/html')
-    response.set_code(b'200')
-    response.set_status(b'OK')
+    response.set_header('Content-Type', 'text/html')
+    response.set_code('200')
+    response.set_status('OK')
     return response
 
 
 def update_article(request):
+    session = sessionFactory.createSession(request)
+    author = session.find_session()
     article_data = query_parser(request.get_body())
     print(article_data)
-    database.update_article(id=int(article_data[b'id'].decode()), title=article_data[b'title'].decode(),
-                            text=article_data[b'text'].decode())
+    if author:
+        database.update_article(id=int(article_data['id']), title=article_data['title'],
+                                text=article_data['text'])
     response = responseFactory.createResponse()
     return response.redirect('/')
 
 
 def delete_article(request, id):
-    article = database.get_article('id', int(id.decode()))
+    article = database.get_article('id', int(id))
     if article:
         database.delete_article(article)
         response = responseFactory.createResponse()

@@ -1,22 +1,22 @@
 import os
-from factory import Factory
-from dal import GetData
+from factory import UserFactory
+from factory import ArticleFactory
+
 from data_access_layer import MemoryDataAccessLayer
-from models import User, Article
 
 '(.*\/.*)$'
-SERVER_NAME = b'BlogServer/0.1'
+SERVER_NAME = 'BlogServer/0.1'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'
 
-userFactory = Factory.UserFactory()
-articleFactory = Factory.ArticleFactory()
+userFactory = UserFactory()
+articleFactory = ArticleFactory()
 
 database = MemoryDataAccessLayer()
 users = [userFactory.createUser(firstname='Ivan', lastname='Ivanov', login='super_mega_user', password='12346'),
-         userFactory.createUser(firstname='Petr', lastname='Petrov', login='peter_user', password='1234'),
+         userFactory.createUser(firstname='Petr', lastname='Petrov', login='peter_user', password='1234', sessionid='123'),
          userFactory.createUser(firstname='John', lastname='Smith', login='john_user', password='123456'),
          userFactory.createUser(firstname='Aibek', lastname='Abdykasymov', login='aibek', password='12345789'), ]
 acticles = [

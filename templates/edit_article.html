@@ -19,6 +19,9 @@
     <div class="button">
         <a href="/send_article/">Добавить запись</a>
     </div>
+	<div class="button username">
+        <span name="user_name">{{user}}</span>
+    </div>
     {% else %}
     <div class="button">
         <a href="/login/">Войти</a>
@@ -48,7 +51,7 @@
 							</div>
 							<input name="id" type="hidden" value="{{article.id}}"/>
 							<div class="form-group">
-							  <button type="submit" class="button">Отправить</button>
+							  <button type="submit" class="button" name="send_article">Отправить</button>
 							</div>
 						</form>
 					</p>

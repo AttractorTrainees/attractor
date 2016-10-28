@@ -1,6 +1,7 @@
 import socket
 
-from factory import Factory
+from factory import RoutingFactory
+from factory import RequestFactory
 from parse import *
 from routes import routes
 from errors import handler_error
@@ -19,7 +20,7 @@ class HTTPServer:
             print("Launching HTTP server...", self.host, ":", self.port)
             self.socket.bind((self.host, self.port))
         except Exception as e:
-            print("ERROR: Could not aquire port:", self.port, "\n")
+            print("ERROR: Could not acquire port:", self.port, "\n")
             self.shutdown()
             import sys
             sys.exit(1)
@@ -27,7 +28,7 @@ class HTTPServer:
         print("Server succesfully acquired the socket with port:", self.port)
         print("Waiting for connection\n")
 
-        routingFactory = Factory.RoutingFactory()
+        routingFactory = RoutingFactory()
         routing = routingFactory.createRouting(routes)
 
         while True:
@@ -39,23 +40,25 @@ class HTTPServer:
     def getting_data(self, connection, routing):
         buffer_size = 4096
         data = self.recv_all_data(connection, buffer_size)
-        print(data)
+        data = data.decode()
         if data:
             query, header, body = parse_http(data)
 
             #Check for right request, otherwise send response with status 400
             try:
-                requestFactory = Factory.RequestFactory()
+                requestFactory = RequestFactory()
                 request = requestFactory.createRequest(query,header,body)
             except Exception as e:
                 response = handler_error(400,)
-                connection.send(response.encode_http())
+                connection.send(response.encode_http().encode())
                 connection.close()
                 return
 
             handler, args = routing.handle_request(request)
             response = handler(request, *args)
-            connection.send(response.encode_http())
+            response = response.encode_http()
+            connection.send(response)
+
             connection.close()
             return
 
@@ -73,6 +76,7 @@ class HTTPServer:
                 continue
             msglen = len(data)
             chunks.append(data)
+            print(chunks)
             data = EMPTY_BYTES.join(chunks)
             del chunks
             return data

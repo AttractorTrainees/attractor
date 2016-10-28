@@ -19,6 +19,9 @@
     <div class="button">
         <a href="/send_article/">Добавить запись</a>
     </div>
+	<div class="button username">
+        <span name="user_name">{{user}}</span>
+    </div>
     {% else %}
     <div class="button">
         <a href="/login/">Войти</a>
@@ -42,7 +45,7 @@
                             <input name="password" value="1234" placeholder="">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="button">Войти</button>
+                            <button type="submit" class="button" name="enter">Войти</button>
                             <div class="clearfix"></div>
                         </div>
                     </form>
