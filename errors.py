@@ -4,14 +4,17 @@ from tempate_engine import render
 from settings import TEMPLATES_DIR, database
 import os
 
+LOGIN_FAILED_ERROR = 1
+EDIT_PERMISSION_DENIED_ERROR = 2
+CREATE_PERMISSION_DENIED_ERROR = 3
 
 sessionFactory = SessionFactory()
 responseFactory = ResponseFactory()
 
 _blog_codes = {
-    1: ('Вы ввели неверную комбинацию логина и пароля.'),
-    2: ('У вас недостаточно прав редактировать эту запись.'),
-    3: ('У вас недостаточно прав для добавления записи.'),
+    LOGIN_FAILED_ERROR: ('Вы ввели неверную комбинацию логина и пароля.'),
+    EDIT_PERMISSION_DENIED_ERROR: ('У вас недостаточно прав редактировать эту запись.'),
+    CREATE_PERMISSION_DENIED_ERROR: ('У вас недостаточно прав для добавления записи.'),
     4: (),
     5: ()
 }

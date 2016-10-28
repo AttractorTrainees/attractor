@@ -6,7 +6,7 @@ from factory import ArticleFactory
 from settings import database
 from tempate_engine import render
 from parse import *
-from errors import handler_error, valid_error, login_required
+from errors import handler_error, valid_error, login_required, LOGIN_FAILED_ERROR, CREATE_PERMISSION_DENIED_ERROR, EDIT_PERMISSION_DENIED_ERROR
 from settings import TEMPLATES_DIR
 
 sessionFactory = SessionFactory()
@@ -77,7 +77,7 @@ def logout(request):
     return response.redirect('/')
 
 
-@login_required(error_code=3)
+@login_required(error_code=CREATE_PERMISSION_DENIED_ERROR)
 def send_article(request):
     template_path = os.path.join(TEMPLATES_DIR, 'add_article.html')
     session = sessionFactory.createSession(request)
@@ -104,7 +104,7 @@ def add_article(request):
     return response.redirect('/')
 
 
-@login_required(error_code=2)
+@login_required(error_code=EDIT_PERMISSION_DENIED_ERROR)
 def edit_article(request, id):
     template_path = os.path.join(TEMPLATES_DIR, 'edit_article.html')
     session = sessionFactory.createSession(request)
