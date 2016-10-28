@@ -59,6 +59,7 @@ class HTTPServer:
             handler, args = self.routing.handle_request(request)
             response = handler(request, *args)
             response = response.encode_http()
+
             connection.send(response)
 
             connection.close()
