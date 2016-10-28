@@ -4,6 +4,7 @@ from new_template_engine import TemplateEngine
 from tempate_engine import render
 from settings import TEMPLATES_DIR, database
 import os
+from settings import CODE_200, OK, TEXT_HTML, CONTENT_TYPE
 
 LOGIN_FAILED_ERROR = 1
 EDIT_PERMISSION_DENIED_ERROR = 2
@@ -62,9 +63,9 @@ def valid_error(code, user):
     context = {'title': error, 'Error': error, 'user': user}
     body = TemplateEngine.render_template('info.html', context)
     response = responseFactory.createResponse(body)
-    response.set_header('Content-Type', 'text/html')
-    response.set_code('200')
-    response.set_status('OK')
+    response.set_header(CONTENT_TYPE, TEXT_HTML)
+    response.set_code(CODE_200)
+    response.set_status(OK)
     return response
 
 

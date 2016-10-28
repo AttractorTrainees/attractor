@@ -13,8 +13,24 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static'
 
+TEXT_HTML = 'text/html'
+CONTENT_TYPE = 'Content-type'
+CODE_200 = '200'
+OK = 'OK'
+
+GET = 'GET'
+POST = 'POST'
+PUT = 'PUT'
+PATCH = 'PATCH'
+DELETE = 'DELETE'
+OPTIONS = 'OPTIONS'
+HEAD = 'HEAD'
+
 userFactory = UserFactory()
 articleFactory = ArticleFactory()
+
+
+
 
 database = MemoryDataAccessLayer()
 users = [userFactory.createUser(firstname='Ivan', lastname='Ivanov', login='super_mega_user', password='12346'),
@@ -31,8 +47,10 @@ acticles = [
     articleFactory.createArticle(id=156, author=users[2], title='Article6', text='TextArticle6 ' * 10),
 ]
 
+
+
 all_available_methods = [
-    'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'
+    GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD
 ]
 
 for article in acticles:
