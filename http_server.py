@@ -1,4 +1,7 @@
+import pickle
 import socket
+
+import sys
 
 from factory import RoutingFactory
 from factory import RequestFactory
@@ -60,8 +63,19 @@ class HTTPServer:
 
             handler, args = routing.handle_request(request)
             response = handler(request, *args)
+
             response = response.encode_http()
-            connection.send(response)
+
+
+            try:
+                # Set the whole string
+                connection.sendall(response)
+            except socket.error:
+                # Send failed
+                print('Send failed')
+                sys.exit()
+
+
 
             connection.close()
             return
@@ -75,7 +89,7 @@ class HTTPServer:
                 chunks.append(data)
                 continue
             chunks.append(data)
-            print(chunks)
+            # print(chunks)
             data = EMPTY_BYTES.join(chunks)
             del chunks
             return data

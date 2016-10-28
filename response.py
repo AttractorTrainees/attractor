@@ -1,5 +1,6 @@
 from datetime import datetime, time, timedelta
 from settings import *
+import zlib
 
 
 class Response(object):
@@ -17,8 +18,8 @@ class Response(object):
     def set_default_headers(self):
         self.headers.setdefault('Server', SERVER_NAME)
         self.headers.setdefault('Date', datetime.now().ctime())
-        self.headers.setdefault('Content-Length', str(len(self.body)))
-
+        # self.headers.setdefault('Content-Encoding', 'gzip')
+        self.headers.setdefault('Content-Length', str(len(self.body.encode())))
 
     def set_cookie(self, sessionid):
         expires = datetime.utcnow() + timedelta(days=30)  # expires in 30 days
@@ -47,12 +48,14 @@ class Response(object):
             lines = []
             for key, value in sorted(iter(self.headers.items())):
                 lines.append(b'%s: %s' % (key.encode(), value.encode()))
+
             header_lines = b'\r\n'.join(lines)
             if header_lines:
                 data.append(header_lines)
                 data.append(b'')
             if self.body:
                 data.append(self.body.encode())
+                print(self.body.encode())
             http_data = b'\r\n'.join(data)
             return http_data
         except Exception as ex:
