@@ -12,8 +12,8 @@ from errors import handler_error, valid_error, login_required, LOGIN_FAILED_ERRO
 
 TEXT_HTML = 'text/html'
 CONTENT_TYPE = 'Content-type'
-CODE = '200'
-STATUS = 'OK'
+CODE_200 = '200'
+OK = 'OK'
 
 sessionFactory = SessionFactory()
 responseFactory = ResponseFactory()
@@ -28,8 +28,8 @@ def index(request):
     rendered_body = TemplateEngine.render_template('index.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header(CONTENT_TYPE, TEXT_HTML)
-    response.set_code(CODE)
-    response.set_status(STATUS)
+    response.set_code(CODE_200)
+    response.set_status(OK)
     return response
 
 
@@ -45,7 +45,7 @@ def article(request, id):
     rendered_body = TemplateEngine.render_template('articles.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header(CONTENT_TYPE, TEXT_HTML)
-    response.set_status(STATUS)
+    response.set_status(OK)
     return response
 
 
@@ -54,8 +54,8 @@ def login(request):
     rendered_body = TemplateEngine.render_template('login.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header(CONTENT_TYPE, TEXT_HTML)
-    response.set_code(CODE)
-    response.set_status(STATUS)
+    response.set_code(CODE_200)
+    response.set_status(OK)
     return response
 
 
@@ -85,8 +85,8 @@ def send_article(request):
     rendered_body = TemplateEngine.render_template('add_article.html', context)
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header(CONTENT_TYPE, TEXT_HTML)
-    response.set_code(CODE)
-    response.set_status(STATUS)
+    response.set_code(CODE_200)
+    response.set_status(OK)
     return response
 
 
@@ -113,8 +113,8 @@ def edit_article(request, id):
 
     response = responseFactory.createResponse(body=rendered_body)
     response.set_header(CONTENT_TYPE, TEXT_HTML)
-    response.set_code(CODE)
-    response.set_status(STATUS)
+    response.set_code(CODE_200)
+    response.set_status(OK)
     return response
 
 
