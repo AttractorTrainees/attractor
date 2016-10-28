@@ -40,6 +40,14 @@ body{
 	float:right;
 }
 
+.username{
+	padding: 25px 10px;
+}
+
+.username span{
+	font-weight: 600;
+}
+
 .button a{
 	background: #63b8ee none repeat scroll 0 0;
 	color: #fff;
