@@ -114,6 +114,10 @@ body{
 	text-align:right;
 }
 
+.item-body  p{
+	word-wrap: break-word;
+}
+
 .item-author{
 	float:left;
 }
