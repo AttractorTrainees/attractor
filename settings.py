@@ -13,6 +13,11 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static'
 
+TEXT_HTML = 'text/html'
+CONTENT_TYPE = 'Content-type'
+CODE_200 = '200'
+OK = 'OK'
+
 GET = 'GET'
 POST = 'POST'
 PUT = 'PUT'

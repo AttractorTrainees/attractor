@@ -4,7 +4,7 @@ from new_template_engine import TemplateEngine
 from tempate_engine import render
 from settings import TEMPLATES_DIR, database
 import os
-from handlers import CODE_200, OK, TEXT_HTML, CONTENT_TYPE
+from settings import CODE_200, OK, TEXT_HTML, CONTENT_TYPE
 
 LOGIN_FAILED_ERROR = 1
 EDIT_PERMISSION_DENIED_ERROR = 2

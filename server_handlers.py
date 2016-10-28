@@ -3,7 +3,7 @@ import os
 from factory import ResponseFactory
 from settings import STATIC_DIR
 from errors import handler_error
-from handlers import CONTENT_TYPE, CODE_200, OK
+from settings import CONTENT_TYPE, CODE_200, OK
 
 TEXT_CSS = 'text/css'
 

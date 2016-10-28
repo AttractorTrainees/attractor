@@ -1,7 +1,7 @@
 import handlers
 from unittest import TestCase
 from parse import *
-from factory import RequestFactory, RoutingFactory
+from factory import RequestFactory, RoutingFactory, HTTPServerFactory
 from parse import parse_http, multipart_parser
 from routing import *
 from request import Request
@@ -88,6 +88,7 @@ class MockClient(object):
 class TestServer(TestCase):
     def test_404(self):
         server = HTTPServer()
+        server.request_factory = RequestFactory()
         client = MockClient(server)
         reply, headers, body = client('/test/test')
         self.assertEqual(reply, ['HTTP/1.1', '404', 'NOT_FOUND'])
@@ -95,6 +96,7 @@ class TestServer(TestCase):
 
     def test_200(self):
         server = HTTPServer()
+        server.request_factory = RequestFactory()
         client = MockClient(server)
         reply, headers, body = client('/')
         self.assertEqual(reply, ['HTTP/1.1', '200', 'OK'])

@@ -15,7 +15,7 @@ class Routing(object):
         routes_methods = [route.method for route in self.routes]
 
         if method not in routes_methods:
-            if method.decode() in all_available_methods:
+            if method in all_available_methods:
                 return handler_error, (405,)
             else:
                 return handler_error, (400,)

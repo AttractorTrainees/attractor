@@ -53,8 +53,8 @@ class HTTPServer:
             try:
                 request = self.request_factory.createRequest(query, header, body)
             except Exception as e:
-                response = handler_error(400, )
-                connection.send(response.encode_http().encode())
+                response = handler_error, (400,)
+                connection.send(response.encode_http())
                 connection.close()
                 return
 

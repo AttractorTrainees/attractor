@@ -7,13 +7,10 @@ from settings import database
 from new_template_engine import TemplateEngine
 from parse import *
 from errors import handler_error, valid_error, login_required, LOGIN_FAILED_ERROR, CREATE_PERMISSION_DENIED_ERROR, EDIT_PERMISSION_DENIED_ERROR
+from settings import CODE_200, OK, TEXT_HTML, CONTENT_TYPE
 
 
 
-TEXT_HTML = 'text/html'
-CONTENT_TYPE = 'Content-type'
-CODE_200 = '200'
-OK = 'OK'
 
 sessionFactory = SessionFactory()
 responseFactory = ResponseFactory()
