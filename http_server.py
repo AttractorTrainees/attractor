@@ -33,16 +33,14 @@ class HTTPServer:
         print("Server succesfully acquired the socket with port:", self.port)
         print("Waiting for connection\n")
 
-        routingFactory = RoutingFactory()
-        routing = routingFactory.createRouting(routes)
 
         while True:
             self.socket.listen(1)
             conn, adr = self.socket.accept()
-            self.get_data(conn, routing)
+            self.get_data(conn)
             print("Got connection from:", adr, "\n")
 
-    def get_data(self, connection, routing):
+    def get_data(self, connection):
         buffer_size = 4096
         data = self.recv_all_data(connection, buffer_size)
         data = data.decode()
@@ -58,7 +56,7 @@ class HTTPServer:
                 connection.close()
                 return
 
-            handler, args = routing.handle_request(request)
+            handler, args = self.routing.handle_request(request)
             response = handler(request, *args)
             response = response.encode_http()
             connection.send(response)
