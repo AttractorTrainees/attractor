@@ -5,7 +5,7 @@ from settings import *
 class Response(object):
     def __init__(self, body):
         self.version = 'HTTP/1.1'
-        self.body = body
+        self.body = body.encode()
         self.code = ''
         self.status = ''
         self.headers = {}
@@ -49,7 +49,7 @@ class Response(object):
                 data.append(header_lines)
                 data.append(b'')
             if self.body:
-                data.append(self.body.encode())
+                data.append(self.body)
             http_data = b'\r\n'.join(data)
             return http_data
         except Exception as ex:
