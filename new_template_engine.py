@@ -288,7 +288,7 @@ class Block(ScopeNode):
 
 class For(ScopeNode):
     def render(self, context):
-        html = self.compilation(context)
+        html = self.compilate(context)
         if self.nextinscope:
             html += self.nextinscope.render(context)
         return html
@@ -304,7 +304,7 @@ class For(ScopeNode):
                 item = getattr(item, val)
         return item
 
-    def compilation(self, context):
+    def compilate(self, context):
         item, forlist = re.match("for\s(.*)\sin\s(\S+)", self.content).groups()
         forlisteval = self.evaluate(context, forlist)
         html = ""
@@ -334,7 +334,7 @@ class If(ScopeNode):
 
     def render(self, context):
         html = ''
-        result = self.compilation(context)
+        result = self.compilate(context)
         if result:
             if self.child:
                 html += self.child.render(context)
@@ -352,7 +352,7 @@ class If(ScopeNode):
             html += self.nextinscope.render(context)
         return html
 
-    def compilation(self, context):
+    def compilate(self, context):
         group = re.match(r'if\s+(.+\S?)\s+(>=|!=|<=|==|>|<|in|not in|)\s+(.+\S?)$', self.content).groups()
         left_operand = self.evaluate(context, group[0])
         right_operand = self.evaluate(context, group[2])
@@ -395,7 +395,7 @@ class Variable(Node):
                 item = getattr(item, val)
         return item
 
-    def compilation(self, context):
+    def compilate(self, context):
         value = self.evaluate(context, self.content)
         if value == None:
             return None
@@ -405,7 +405,7 @@ class Variable(Node):
             return value
 
     def render(self, context):
-        html = self.compilation(context)
+        html = self.compilate(context)
         if self.nextinscope:
             html += self.nextinscope.render(context)
         return html
@@ -416,12 +416,12 @@ class Static(Node):
         path = re.match(r"static\s*'(?P<path>.*\/.*|.*)'", self.content).group('path')
         return path
 
-    def compilation(self, context):
+    def compilate(self, context):
         url = '%s/%s/%s' % (HOSTDOMAIN, STATIC_URL, self.get_path())
         return url
 
     def render(self, context):
-        html = self.compilation(context)
+        html = self.compilate(context)
         if self.nextinscope:
             html += self.nextinscope.render(context)
         return html
