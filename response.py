@@ -14,7 +14,7 @@ class Response(object):
     def set_default_headers(self):
         self.headers.setdefault('Server', SERVER_NAME)
         self.headers.setdefault('Date', datetime.now().ctime())
-        self.headers.setdefault('Content-Length', str(len(self.body)))
+        self.headers.setdefault('Content-Length', str(len(self.body.encode())))
 
 
     def set_cookie(self, sessionid):
