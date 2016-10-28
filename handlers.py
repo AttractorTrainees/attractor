@@ -4,11 +4,16 @@ from factory import SessionFactory
 from factory import ResponseFactory
 from factory import ArticleFactory
 from settings import database
-from tempate_engine import render
 from new_template_engine import TemplateEngine
 from parse import *
 from errors import handler_error, valid_error, login_required, LOGIN_FAILED_ERROR, CREATE_PERMISSION_DENIED_ERROR, EDIT_PERMISSION_DENIED_ERROR
-from settings import TEMPLATES_DIR
+
+
+
+TEXT_HTML = 'text/html'
+CONTENT_TYPE = 'Content-type'
+CODE = '200'
+STATUS = 'OK'
 
 sessionFactory = SessionFactory()
 responseFactory = ResponseFactory()
@@ -22,9 +27,9 @@ def index(request):
     context = {'articles': articles, 'user': user}
     rendered_body = TemplateEngine.render_template('index.html', context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header('Content-Type', 'text/html')
-    response.set_code('200')
-    response.set_status('OK')
+    response.set_header(CONTENT_TYPE, TEXT_HTML)
+    response.set_code(CODE)
+    response.set_status(STATUS)
     return response
 
 
@@ -39,8 +44,8 @@ def article(request, id):
     context = {'article': article, 'user': user, 'owner': owner}
     rendered_body = TemplateEngine.render_template('articles.html', context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header('Content-Type', 'text/html')
-    response.set_status('OK')
+    response.set_header(CONTENT_TYPE, TEXT_HTML)
+    response.set_status(STATUS)
     return response
 
 
@@ -48,9 +53,9 @@ def login(request):
     context = {'title': 'Авторизация', 'user': None}
     rendered_body = TemplateEngine.render_template('login.html', context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header('Content-Type', 'text/html')
-    response.set_code('200')
-    response.set_status('OK')
+    response.set_header(CONTENT_TYPE, TEXT_HTML)
+    response.set_code(CODE)
+    response.set_status(STATUS)
     return response
 
 
@@ -79,9 +84,9 @@ def send_article(request):
 
     rendered_body = TemplateEngine.render_template('add_article.html', context)
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header('Content-Type', 'text/html')
-    response.set_code('200')
-    response.set_status('OK')
+    response.set_header(CONTENT_TYPE, TEXT_HTML)
+    response.set_code(CODE)
+    response.set_status(STATUS)
     return response
 
 
@@ -107,9 +112,9 @@ def edit_article(request, id):
     rendered_body = TemplateEngine.render_template('edit_article.html', context)
 
     response = responseFactory.createResponse(body=rendered_body)
-    response.set_header('Content-Type', 'text/html')
-    response.set_code('200')
-    response.set_status('OK')
+    response.set_header(CONTENT_TYPE, TEXT_HTML)
+    response.set_code(CODE)
+    response.set_status(STATUS)
     return response
 
 

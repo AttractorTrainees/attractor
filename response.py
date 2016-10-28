@@ -4,9 +4,6 @@ from settings import *
 
 class Response(object):
     def __init__(self, body):
-        # self.version = request.get_version()
-        # self.path = request.get_path()
-        # self.method = request.get_method()
         self.version = 'HTTP/1.1'
         self.body = body
         self.code = ''
